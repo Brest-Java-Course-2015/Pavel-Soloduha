@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Table" id="2" x="24" y="184" width="385" height="241" text="Номер\nдокумента,Тип\nдокумента,=.  Дата v&#xA;532,Расходная накладная,12.05.15&#xA;495,Расходная накладная,12.05.15&#xA;560,Приходная накладная,12.05.15&#xA;850,Итоговая накладная,13.05.15" measuredWidth="385" measuredHeight="241" alternative="#eeeeee">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:ButtonBar" id="3" x="24" y="88" width="233" height="25" text="Журнал, Отчёты" measuredWidth="233" measuredHeight="25" selection="0">
+    <font/>
+    <items x="0" y="0" width="115" height="25" text="Журнал"/>
+    <items x="115" y="0" width="118" height="25" text="Отчёты"/>
+  </widgets>
+  <widgets xsi:type="model:VButtonBar" id="8" x="440" y="184" text="Добавить\nдокумент&#xA;Отменить\nдокумент" measuredWidth="78" measuredHeight="86" selection="0">
+    <font/>
+    <items link="addDocument.screen" x="0" y="0" width="78" height="43" text="Добавить\nдокумент"/>
+    <items x="0" y="43" width="78" height="43" text="Отменить\nдокумент"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="9" x="24" y="136" text="Список документов" measuredWidth="118" measuredHeight="23">
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>
