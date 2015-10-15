@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -24,10 +27,11 @@ public class UserServiceImplTest {
 
     @Test
     public void testGetAllUsers() throws Exception {
-
+        List<User> users = userService.getAllUsers();
+        assertTrue(users.size() == 2);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void testAddNullUser() throws Exception {
         userService.addUser(null);
     }
@@ -37,5 +41,24 @@ public class UserServiceImplTest {
         User user = new User();
         user.setUserId(1);
         userService.addUser(user);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddUserWithEmptyLogin() throws Exception {
+        User user = new User();
+        user.setLogin("");
+        userService.addUser(user);
+    }
+
+    @Test
+    public void testGetUserById() {
+        User user = userService.getUserById(1);
+        assertTrue(user.getLogin().equals("userLogin1"));
+    }
+
+    @Test
+    public void testGetUserByLogin() {
+        User user = userService.getUserByLogin("userLogin1");
+        assertTrue(user.getPassword().equals("userPassword1"));
     }
 }

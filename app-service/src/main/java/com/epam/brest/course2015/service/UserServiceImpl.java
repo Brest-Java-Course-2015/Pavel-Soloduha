@@ -30,11 +30,40 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserById(Integer userId) {
+        LOGGER.debug("getUserById({})", userId);
+        Assert.notNull(userId);
+        return userDao.getUserById(userId);
+    }
+
+    @Override
+    public User getUserByLogin(String login) {
+        LOGGER.debug("GetUSerByLogin({})", login);
+        Assert.notNull(login);
+        return userDao.getUserByLogin(login);
+    }
+
+    @Override
     public Integer addUser(User user) {
+        LOGGER.debug("addUser(user) {}", user.getLogin());
         Assert.notNull(user, "User should not be null.");
         Assert.isNull(user.getUserId());
         Assert.notNull(user.getLogin());
         Assert.hasText(user.getLogin());
         return userDao.addUser(user);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        LOGGER.debug("updateUser(user) {}", user.getLogin());
+        Assert.notNull(user, "User should not be null.");
+        userDao.updateUser(user);
+    }
+
+    @Override
+    public void deleteUser(Integer userId) {
+        LOGGER.debug("deleteUser({})", userId);
+        Assert.notNull(userId);
+        userDao.deleteUser(userId);
     }
 }
