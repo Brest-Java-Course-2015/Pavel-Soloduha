@@ -8,18 +8,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
-import static com.epam.brest.course2015.domain.User.*;
 import static com.epam.brest.course2015.domain.User.UserFields.*;
 
 /**
@@ -28,8 +26,6 @@ import static com.epam.brest.course2015.domain.User.UserFields.*;
 public class UserDaoImpl implements UserDao {
 
     private static final Logger LOGGER = LogManager.getLogger();
-
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
     @Value("${user.select}")
     private String userSelect;
@@ -59,25 +55,25 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        LOGGER.info("getAllUsers()");
+        LOGGER.debug("getAllUsers()");
         return jdbcTemplate.query(userSelect, new UserRowMapper());
     }
 
     @Override
     public User getUserById(Integer userId) {
-        LOGGER.info("getUserById({})", userId);
+        LOGGER.debug("getUserById({})", userId);
         return jdbcTemplate.queryForObject(userSelectById, new Object[]{userId}, new UserRowMapper());
     }
 
     @Override
     public User getUserByLogin(String login) {
-        LOGGER.info("getUserByLogin({})", login);
+        LOGGER.debug("getUserByLogin({})", login);
         return jdbcTemplate.queryForObject(userSelectByLogin, new Object[]{login}, new UserRowMapper());
     }
 
     @Override
     public Integer addUser(User user) {
-        LOGGER.info("addUser(user): {}", user.getLogin(), dateFormat.format(user.getUpdatedDate()));
+        LOGGER.debug("addUser(user): login = {}", user.getLogin());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedParameterJdbcTemplate.update(insertUser, getParametersMap(user), keyHolder);
         return keyHolder.getKey().intValue();
@@ -85,13 +81,13 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateUser(User user) {
-        LOGGER.info("updateUser(user): {}", user.getLogin());
+        LOGGER.debug("updateUser(user): {}", user.getLogin());
         jdbcTemplate.update(updateUser, new Object[]{user.getPassword(), user.getUpdatedDate(), user.getUserId()});
     }
 
     @Override
     public void deleteUser(Integer userId) {
-        LOGGER.info("deleteUser(): {}", userId);
+        LOGGER.debug("deleteUser(): {}", userId);
         jdbcTemplate.update(deleteUser, new Object[]{userId});
     }
 

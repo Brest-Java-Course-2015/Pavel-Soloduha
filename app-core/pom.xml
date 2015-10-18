@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>app-core</artifactId>
-    <name>${artifactId}</name>
+    <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
     <parent>
@@ -19,6 +19,10 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
     </dependencies>
 </project>
