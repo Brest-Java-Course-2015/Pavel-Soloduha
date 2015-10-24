@@ -14,11 +14,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-
-import static com.epam.brest.course2015.domain.User.UserFields.*;
 
 /**
  * Created by pavel on 14.10.15.
@@ -35,6 +31,9 @@ public class UserDaoImpl implements UserDao {
 
     @Value("${user.selectByLogin}")
     private String userSelectByLogin;
+
+    @Value("${user.countUsers}")
+    private String countUser;
 
     @Value("${user.insertUser}")
     private String insertUser;
@@ -72,6 +71,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public Integer getCountUsers(String login) {
+        LOGGER.debug("getCountUsers(): login = {}", login);
+        return jdbcTemplate.queryForObject(countUser, new String[]{login}, Integer.class);
+    }
+
+    @Override
     public Integer addUser(User user) {
         LOGGER.debug("addUser(user): login = {}", user.getLogin());
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -93,11 +98,11 @@ public class UserDaoImpl implements UserDao {
 
     private MapSqlParameterSource getParametersMap(User user) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-        parameterSource.addValue(USER_ID.getValue(), user.getUserId());
-        parameterSource.addValue(LOGIN.getValue(), user.getLogin());
-        parameterSource.addValue(PASSWORD.getValue(), user.getPassword());
-        parameterSource.addValue(CREATED_DATE.getValue(), user.getCreatedDate());
-        parameterSource.addValue(UPDATED_DATE.getValue(), user.getUpdatedDate());
+        parameterSource.addValue(User.UserFields.USER_ID.getValue(), user.getUserId());
+        parameterSource.addValue(User.UserFields.LOGIN.getValue(), user.getLogin());
+        parameterSource.addValue(User.UserFields.PASSWORD.getValue(), user.getPassword());
+        parameterSource.addValue(User.UserFields.CREATED_DATE.getValue(), user.getCreatedDate());
+        parameterSource.addValue(User.UserFields.UPDATED_DATE.getValue(), user.getUpdatedDate());
         return parameterSource;
     }
 
@@ -105,11 +110,11 @@ public class UserDaoImpl implements UserDao {
 
         @Override
         public User mapRow(ResultSet resultSet, int i) throws SQLException {
-            User user = new User(resultSet.getInt(USER_ID.getValue()),
-                    resultSet.getString(LOGIN.getValue()),
-                    resultSet.getString(PASSWORD.getValue()),
-                    resultSet.getTimestamp(CREATED_DATE.getValue()),
-                    resultSet.getTimestamp(UPDATED_DATE.getValue()));
+            User user = new User(resultSet.getInt(User.UserFields.USER_ID.getValue()),
+                    resultSet.getString(User.UserFields.LOGIN.getValue()),
+                    resultSet.getString(User.UserFields.PASSWORD.getValue()),
+                    resultSet.getTimestamp(User.UserFields.CREATED_DATE.getValue()),
+                    resultSet.getTimestamp(User.UserFields.UPDATED_DATE.getValue()));
             return user;
         }
     }

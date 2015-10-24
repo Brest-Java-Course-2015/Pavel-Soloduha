@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by juga on 18.10.15.
+ * Created by pavel on 18.10.15.
  */
 @RestController
 public class VersionController {

@@ -15,10 +15,11 @@ public interface UserDao {
 
     public User getUserByLogin(String login);
 
+    public Integer getCountUsers(String login);
+
     public Integer addUser(User user);
 
     public void updateUser(User user);
 
     public void deleteUser(Integer userId);
-
 }

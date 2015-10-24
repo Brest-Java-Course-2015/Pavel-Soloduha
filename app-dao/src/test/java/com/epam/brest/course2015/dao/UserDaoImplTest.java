@@ -10,7 +10,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
@@ -56,6 +55,25 @@ public class UserDaoImplTest {
         User user = userDao.getUserByLogin(USER_LOGIN1);
         assertNotNull(user);
         assertTrue(user.getLogin().equals(USER_LOGIN1));
+    }
+
+    @Test
+    public void testCountUsers() throws Exception {
+        LOGGER.debug("test: countUsers()");
+        String login = userDao.getAllUsers().get(0).getLogin();
+        assertNotNull(login);
+        Integer usersCount = userDao.getCountUsers(login);
+        assertNotNull(usersCount);
+        assertTrue(usersCount.equals(1));
+    }
+
+    @Test
+    public void testZeroCountUsers() throws Exception {
+        LOGGER.debug("test: zeroCountUsers()");
+        String login = "qweqweqwe";
+        Integer usersCount = userDao.getCountUsers(login);
+        assertNotNull(usersCount);
+        assertTrue(usersCount.equals(0));
     }
 
     @Test
