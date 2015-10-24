@@ -46,17 +46,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Integer userId) {
-        LOGGER.debug("getUserByLogin(): user id = {} ", userId);
         Assert.notNull(userId, "User Id should not be null.");
+        LOGGER.debug("getUserByLogin(): user id = {} ", userId);
         Assert.isTrue(userId > 0);
         return userDao.getUserById(userId);
     }
 
     @Override
     public User getUserByLogin(String login) {
-        LOGGER.debug("getUserByLogin(): user login = {} ", login);
         Assert.hasText(login, "User login should not be null.");
+        LOGGER.debug("getUserByLogin(): user login = {} ", login);
         return userDao.getUserByLogin(login);
+    }
+
+    @Override
+    public Integer getCountUsers(String login) {
+        Assert.hasText(login, "User login should not be null.");
+        LOGGER.debug("getCountUsers(): user login = {} ", login);
+        return userDao.getCountUsers(login);
     }
 
     @Override
@@ -70,8 +77,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Integer userId) {
-        LOGGER.debug("deleteUser(): user id = {} ", userId);
         Assert.notNull(userId, "User Id should not be null.");
+        LOGGER.debug("deleteUser(): user id = {} ", userId);
         Assert.isTrue(userId > 0);
         userDao.deleteUser(userId);
     }
