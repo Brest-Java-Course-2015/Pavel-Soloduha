@@ -23,6 +23,10 @@ public class UserServiceMockTest {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
+    public static final int USER_ID = 1;
+    public static final String USER_LOGIN_1 = "userLogin1";
+    public static final String USER_PASSWORD_1 = "userPassword1";
+
     @Autowired
     private UserService userService;
 
@@ -30,6 +34,8 @@ public class UserServiceMockTest {
     private UserDao mockUserDao;
 
     private static final User user = new User("userLogin3", "userPassword3");
+    public static final User NEW_USER = new User(USER_ID, USER_LOGIN_1, USER_PASSWORD_1);
+
 
     @After
     public void clean() {
@@ -53,8 +59,8 @@ public class UserServiceMockTest {
 
     @Test
     public void testAddUser() {
-        expect(mockUserDao.getCountUsers("userLogin3")).andReturn(-10);
-        expect(mockUserDao.addUser(new User("userLogin3", ""))).andReturn(5);
+        expect(mockUserDao.getCountUsers(user.getLogin())).andReturn(-10);
+        expect(mockUserDao.addUser(new User(user.getLogin(), ""))).andReturn(5);
         replay(mockUserDao);
         int id = userService.addUser(user);
         Assert.assertTrue(id == 5);
@@ -62,15 +68,24 @@ public class UserServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testAddExistUser() {
-        expect(mockUserDao.getCountUsers("userLogin3")).andReturn(1);
+        expect(mockUserDao.getCountUsers(user.getLogin())).andReturn(1);
         replay(mockUserDao);
         userService.addUser(user);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void testGetUserByLoginException() {
-        expect(mockUserDao.getUserByLogin(user.getLogin())).andThrow(new UnsupportedOperationException());
+    @Test
+    public void testGetUserById() {
+        expect(mockUserDao.getUserById(NEW_USER.getUserId())).andReturn(NEW_USER);
         replay(mockUserDao);
-        userService.getUserByLogin(user.getLogin());
+        User result = userService.getUserById(NEW_USER.getUserId());
+        Assert.assertTrue(result.equals(NEW_USER));
+    }
+
+    @Test
+    public void testGetCountUsers() {
+        expect(mockUserDao.getCountUsers(user.getLogin())).andReturn(1);
+        replay(mockUserDao);
+        Integer count = userService.getCountUsers(user.getLogin());
+        Assert.assertTrue(count == 1);
     }
 }

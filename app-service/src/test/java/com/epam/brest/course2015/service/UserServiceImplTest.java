@@ -21,6 +21,10 @@ public class UserServiceImplTest {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
+    public static final Integer USER_ID1 = 1;
+    public static final String USER_LOGIN1 = "userLogin1";
+    public static final String USER_PASSWORD1 = "userPassword1";
+
     @Autowired
     private UserService userService;
 
@@ -72,10 +76,123 @@ public class UserServiceImplTest {
     @Test(expected = IllegalArgumentException.class)
     public void testAddUserWithNotUniqueLogin() throws Exception {
         LOGGER.debug("test: addUserWithNotUniqueLogin()");
-        User user = new User("login", "password");
-        userService.addUser(user);
+        User user = new User(USER_LOGIN1, USER_PASSWORD1);
         userService.addUser(user);
     }
 
+    @Test
+    public void testGetUserById() throws Exception {
+        LOGGER.debug("test: getUserById()");
+        User user = userService.getUserById(1);
+        Assert.assertTrue(user.getLogin().equals("userLogin1"));
+    }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetUserByNullId() throws Exception {
+        LOGGER.debug("test: getUserByNullId()");
+        userService.getUserById(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetUserByNegativeId() throws Exception {
+        LOGGER.debug("test: getUserByNegativeId()");
+        userService.getUserById(-10);
+    }
+
+    @Test
+    public void testGetUserByLogin() throws Exception {
+        LOGGER.debug("test: getUserByLogin()");
+        User user = userService.getUserByLogin("userLogin1");
+        Assert.assertTrue(user.getLogin().equals("userLogin1"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetUserByNullLogin() throws Exception {
+        LOGGER.debug("test: getUserByNullLogin()");
+        userService.getUserByLogin(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetUserByEmptyLogin() throws Exception {
+        LOGGER.debug("test: getUserByNullLogin()");
+        userService.getUserByLogin("");
+    }
+
+    @Test
+    public void testUpdateUser() throws Exception {
+        LOGGER.debug("test: updateUser()");
+        User user = userService.getUserByLogin(USER_LOGIN1);
+        user.setPassword(USER_PASSWORD1 + 12);
+        userService.updateUser(user);
+        User newUser = userService.getUserById(user.getUserId());
+        Assert.assertTrue(user.getLogin().equals(newUser.getLogin()));
+        Assert.assertTrue(user.getPassword().equals(newUser.getPassword()));
+        Assert.assertTrue(user.getCreatedDate().equals(newUser.getCreatedDate()));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateNullUser() throws Exception {
+        LOGGER.debug("test: testUpdateNullUser()");
+        userService.updateUser(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateUserNullId() throws Exception {
+        LOGGER.debug("test: updateUserNullId()");
+        User newUser = new User(USER_LOGIN1, USER_PASSWORD1);
+        userService.updateUser(newUser);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateUserNullPassword() throws Exception {
+        LOGGER.debug("test: updateUserNullPassword()");
+        User newUser = new User(USER_LOGIN1, null);
+        userService.updateUser(newUser);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateUserEmptyPassword() throws Exception {
+        LOGGER.debug("test: updateUserNullPassword()");
+        User newUser = new User(USER_LOGIN1, "");
+        userService.updateUser(newUser);
+    }
+
+    @Test
+    public void testDeleteUser() throws Exception {
+        LOGGER.debug("test: deleteUser()");
+        int sizeBefore = userService.getAllUsers().size();
+        userService.deleteUser(USER_ID1);
+        Assert.assertTrue(sizeBefore - 1 == userService.getAllUsers().size());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteUserNullId() throws Exception {
+        LOGGER.debug("test: deleteUserNullId()");
+        userService.deleteUser(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteUserNegativeId() throws Exception {
+        LOGGER.debug("test: deleteUserNullId()");
+        userService.deleteUser(-10);
+    }
+
+    @Test
+    public void testGetCountUsers() throws Exception {
+        LOGGER.debug("test: getCountSsers()");
+        Integer count = userService.getCountUsers(USER_LOGIN1);
+        Assert.assertTrue(count == 1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetCountUsersNullLogin() throws Exception {
+        LOGGER.debug("test: deleteUserNullLogin()");
+        userService.getCountUsers(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetCountUsersEmptyLogin() throws Exception {
+        LOGGER.debug("test: deleteUserNullLogin()");
+        userService.getCountUsers("");
+    }
 }
