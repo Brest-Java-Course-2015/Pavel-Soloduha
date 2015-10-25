@@ -42,11 +42,11 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-    <bean id="userDao" class="UserDaoImpl">
+    <bean id="userDao" class="com.epam.brest.course2015.dao.UserDaoImpl">
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="userService" class="UserServiceImpl">
+    <bean id="userService" class="com.epam.brest.course2015.service.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
     </bean>
 
