@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 /**
- * Created by juga on 23.10.15.
+ * Created by pavel on 23.10.15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:test-spring-rest-mock.xml"})
@@ -69,11 +69,11 @@ public class UserControllerMockTest {
         mockMvc.perform(
                 post("/user")
                         .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(user)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(user)
         ).andDo(print())
-        .andExpect(status().isOk())
-        .andExpect(content().string("3"));
+                .andExpect(status().isCreated())
+                .andExpect(content().string("3"));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class UserControllerMockTest {
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(print())
                 .andExpect(status().isAccepted())
-        .andExpect(content().string(""));
+                .andExpect(content().string(""));
     }
 
     @Test
