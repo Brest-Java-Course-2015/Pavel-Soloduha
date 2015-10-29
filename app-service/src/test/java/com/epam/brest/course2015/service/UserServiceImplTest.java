@@ -1,6 +1,7 @@
 package com.epam.brest.course2015.service;
 
 import com.epam.brest.course2015.domain.User;
+import com.epam.brest.course2015.dto.UserDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
@@ -194,5 +195,14 @@ public class UserServiceImplTest {
     public void testGetCountUsersEmptyLogin() throws Exception {
         LOGGER.debug("test: deleteUserNullLogin()");
         userService.getCountUsers("");
+    }
+
+    @Test
+    public void testGetUserDto() throws Exception {
+        LOGGER.debug("test: getUserDto()");
+        UserDto userDto = userService.getUserDto();
+        Assert.assertNotNull(userDto);
+        Assert.assertTrue(userDto.getTotal() > 0);
+        Assert.assertTrue(userDto.getUsers().size() > 0);
     }
 }

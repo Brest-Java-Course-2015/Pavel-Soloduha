@@ -14,7 +14,11 @@ import org.springframework.jdbc.support.KeyHolder;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import static com.epam.brest.course2015.domain.User.UserFields.*;
 
 /**
  * Created by pavel on 14.10.15.
@@ -24,25 +28,28 @@ public class UserDaoImpl implements UserDao {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Value("${user.select}")
-    private String userSelect;
+    private String userSelectSql;
 
     @Value("${user.selectById}")
-    private String userSelectById;
+    private String userSelectByIdSql;
 
     @Value("${user.selectByLogin}")
-    private String userSelectByLogin;
+    private String userSelectByLoginSql;
 
     @Value("${user.countUsers}")
-    private String countUser;
+    private String countUserSql;
+
+    @Value("${user.totalUsersCount}")
+    private String totalUsersCountSql;
 
     @Value("${user.insertUser}")
-    private String insertUser;
+    private String insertUserSql;
 
     @Value("${user.updateUser}")
-    private String updateUser;
+    private String updateUserSql;
 
     @Value("${user.deleteUser}")
-    private String deleteUser;
+    private String deleteUserSql;
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -55,54 +62,59 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         LOGGER.debug("getAllUsers()");
-        return jdbcTemplate.query(userSelect, new UserRowMapper());
+        return jdbcTemplate.query(userSelectSql, new UserRowMapper());
     }
 
     @Override
     public User getUserById(Integer userId) {
         LOGGER.debug("getUserById({})", userId);
-        return jdbcTemplate.queryForObject(userSelectById, new Object[]{userId}, new UserRowMapper());
+        return jdbcTemplate.queryForObject(userSelectByIdSql, new Object[]{userId}, new UserRowMapper());
     }
 
     @Override
     public User getUserByLogin(String login) {
         LOGGER.debug("getUserByLogin({})", login);
-        return jdbcTemplate.queryForObject(userSelectByLogin, new Object[]{login}, new UserRowMapper());
+        return jdbcTemplate.queryForObject(userSelectByLoginSql, new Object[]{login}, new UserRowMapper());
     }
 
     @Override
     public Integer getCountUsers(String login) {
         LOGGER.debug("getCountUsers(): login = {}", login);
-        return jdbcTemplate.queryForObject(countUser, new String[]{login}, Integer.class);
+        return jdbcTemplate.queryForObject(countUserSql, new String[]{login}, Integer.class);
+    }
+
+    public Integer getTotalUsersCount() {
+        LOGGER.debug("getTotalUsersCount()");
+        return jdbcTemplate.queryForObject(totalUsersCountSql, Integer.class);
     }
 
     @Override
     public Integer addUser(User user) {
         LOGGER.debug("addUser(user): login = {}", user.getLogin());
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        namedParameterJdbcTemplate.update(insertUser, getParametersMap(user), keyHolder);
+        namedParameterJdbcTemplate.update(insertUserSql, getParametersMap(user), keyHolder);
         return keyHolder.getKey().intValue();
     }
 
     @Override
     public void updateUser(User user) {
         LOGGER.debug("updateUser(user): {}", user.getLogin());
-        jdbcTemplate.update(updateUser, new Object[]{user.getPassword(), user.getUpdatedDate(), user.getUserId()});
+        jdbcTemplate.update(updateUserSql, new Object[]{user.getPassword(), user.getUpdatedDate(), user.getUserId()});
     }
 
     @Override
     public void deleteUser(Integer userId) {
         LOGGER.debug("deleteUser(): {}", userId);
-        jdbcTemplate.update(deleteUser, new Object[]{userId});
+        jdbcTemplate.update(deleteUserSql, new Object[]{userId});
     }
 
     private MapSqlParameterSource getParametersMap(User user) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-        parameterSource.addValue(User.UserFields.USER_ID.getValue(), user.getUserId());
-        parameterSource.addValue(User.UserFields.LOGIN.getValue(), user.getLogin());
-        parameterSource.addValue(User.UserFields.PASSWORD.getValue(), user.getPassword());
-        parameterSource.addValue(User.UserFields.CREATED_DATE.getValue(), user.getCreatedDate());
-        parameterSource.addValue(User.UserFields.UPDATED_DATE.getValue(), user.getUpdatedDate());
+        parameterSource.addValue(USER_ID.getValue(), user.getUserId());
+        parameterSource.addValue(LOGIN.getValue(), user.getLogin());
+        parameterSource.addValue(PASSWORD.getValue(), user.getPassword());
+        parameterSource.addValue(CREATED_DATE.getValue(), user.getCreatedDate());
+        parameterSource.addValue(UPDATED_DATE.getValue(), user.getUpdatedDate());
         return parameterSource;
     }
 
@@ -110,11 +122,11 @@ public class UserDaoImpl implements UserDao {
 
         @Override
         public User mapRow(ResultSet resultSet, int i) throws SQLException {
-            User user = new User(resultSet.getInt(User.UserFields.USER_ID.getValue()),
-                    resultSet.getString(User.UserFields.LOGIN.getValue()),
-                    resultSet.getString(User.UserFields.PASSWORD.getValue()),
-                    resultSet.getTimestamp(User.UserFields.CREATED_DATE.getValue()),
-                    resultSet.getTimestamp(User.UserFields.UPDATED_DATE.getValue()));
+            User user = new User(resultSet.getInt(USER_ID.getValue()),
+                    resultSet.getString(LOGIN.getValue()),
+                    resultSet.getString(PASSWORD.getValue()),
+                    resultSet.getTimestamp(CREATED_DATE.getValue()),
+                    resultSet.getTimestamp(UPDATED_DATE.getValue()));
             return user;
         }
     }
