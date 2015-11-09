@@ -38,4 +38,9 @@ public class DetailServiceImpl implements DetailService {
     public Integer addDetail(Detail detail) {
         return detailDao.addDetail(detail);
     }
+
+    @Override
+    public Detail getDetailById(Integer detailId) {
+        return detailDao.getDetailById(detailId);
+    }
 }

@@ -21,6 +21,7 @@ public class DetailRestController {
     private DetailService detailService;
 
     @RequestMapping(value = "/details", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.FOUND)
     public List<Detail> getAllDetails() {
         return detailService.getAllDetails();
     }
@@ -38,9 +39,15 @@ public class DetailRestController {
     }
 
     @RequestMapping(value = "/detail/{id}/{name}", method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public @ResponseBody void updateDetail(@PathVariable(value = "id") Integer detailId,
                                          @PathVariable(value = "name") String detailName) {
         detailService.updateDetail(new Detail(detailId, detailName));
+    }
+
+    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.FOUND)
+    public Detail getDetailById(@PathVariable(value = "id") Integer detailId) {
+        return detailService.getDetailById(detailId);
     }
 }

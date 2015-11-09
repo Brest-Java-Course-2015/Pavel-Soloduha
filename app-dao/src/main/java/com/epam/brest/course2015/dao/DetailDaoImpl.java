@@ -33,6 +33,9 @@ public class DetailDaoImpl implements DetailDao{
     @Value("${detail.insertDetail}")
     private String detailInsertSql;
 
+    @Value("${detail.selectDetailById}")
+    private String detailSelectByIdSql;
+
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -78,6 +81,11 @@ public class DetailDaoImpl implements DetailDao{
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedParameterJdbcTemplate.update(detailInsertSql, getParametersMap(detail), keyHolder);
         return keyHolder.getKey().intValue();
+    }
+
+    @Override
+    public Detail getDetailById(Integer detailId) {
+        return jdbcTemplate.queryForObject(detailSelectByIdSql, new Object[]{detailId}, new UserRowMapper());
     }
 
 }

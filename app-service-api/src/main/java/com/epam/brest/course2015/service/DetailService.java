@@ -17,4 +17,6 @@ public interface DetailService {
     void updateDetail(Detail detail);
 
     Integer addDetail(Detail detail);
+
+    Detail getDetailById(Integer detailId);
 }
