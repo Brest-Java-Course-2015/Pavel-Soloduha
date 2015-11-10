@@ -25,14 +25,14 @@ public class DocHead {
         this.documentPrice = documentPrice;
     }
 
-    public enum DetailFields {
+    public enum DocHeadFields {
         DOCUMENT_ID("documentId"),
         DOCUMENT_TYPE("documentType"),
-        DOCUMENT_DATE("documentId"),
+        DOCUMENT_DATE("documentDate"),
         DOCUMENT_PRICE("documentId");
 
 
-        DetailFields(String value) {
+        DocHeadFields(String value) {
             this.value = value;
         }
 

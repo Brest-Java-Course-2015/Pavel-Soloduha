@@ -7,12 +7,12 @@ INSERT INTO DETAIL (detailid, detailname)
 INSERT INTO DETAIL (detailid, detailname)
     VALUES (25, 'Лопата');
 
-INSERT INTO DOCHEAD (documentid, documenttype, documentdata, documentprice)
-    VALUES (40, 1, '10.10.2015', 5000);
-INSERT INTO DOCHEAD (documentid, documenttype, documentdata, documentprice)
-    VALUES (43, 1, '12.10.2015', 10300);
-INSERT INTO DOCHEAD (documentid, documenttype, documentdata, documentprice)
-    VALUES (50, 2, '14.10.2015', 7400);
+INSERT INTO DOCHEAD (documentid, documenttype, documentdate, documentprice)
+    VALUES (40, 1, NOW(), 5000);
+INSERT INTO DOCHEAD (documentid, documenttype, documentdate, documentprice)
+    VALUES (43, 1, NOW(), 10300);
+INSERT INTO DOCHEAD (documentid, documenttype, documentdate, documentprice)
+    VALUES (50, 2, NOW(), 7400);
 
 INSERT INTO DOCBODY (documentid, detailid, detailcount)
     VALUES (40, 3, 50);

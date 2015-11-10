@@ -50,6 +50,20 @@
         <property name="detailDao" ref="detailDao"/>
     </bean>
 
+    <bean id="docHeadDao" class="com.epam.brest.course2015.dao.DocHeadDaoImpl">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="docBodyDao" class="com.epam.brest.course2015.dao.DocBodyDaoImpl">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="documentService" class="com.epam.brest.course2015.service.DocumentServiceImpl">
+        <property name="docHeadDao" ref="docHeadDao"/>
+        <property name="docBodyDao" ref="docBodyDao"/>
+    </bean>
+
+
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="messageConverters">
             <list>
