@@ -51,7 +51,7 @@ public class DetailDaoImpl implements DetailDao{
         return parameterSource;
     }
 
-    private class UserRowMapper implements RowMapper<Detail> {
+    private class DetailRowMapper implements RowMapper<Detail> {
 
         @Override
         public Detail mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -63,7 +63,7 @@ public class DetailDaoImpl implements DetailDao{
 
     @Override
     public List<Detail> getAllDetails() {
-        return jdbcTemplate.query(detailSelectSql, new UserRowMapper());
+        return jdbcTemplate.query(detailSelectSql, new DetailRowMapper());
     }
 
     @Override
@@ -85,7 +85,7 @@ public class DetailDaoImpl implements DetailDao{
 
     @Override
     public Detail getDetailById(Integer detailId) {
-        return jdbcTemplate.queryForObject(detailSelectByIdSql, new Object[]{detailId}, new UserRowMapper());
+        return jdbcTemplate.queryForObject(detailSelectByIdSql, new Object[]{detailId}, new DetailRowMapper());
     }
 
 }
