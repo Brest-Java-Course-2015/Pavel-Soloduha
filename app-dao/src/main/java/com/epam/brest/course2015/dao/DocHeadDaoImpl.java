@@ -1,6 +1,8 @@
 package com.epam.brest.course2015.dao;
 
 import com.epam.brest.course2015.domain.DocHead;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -20,6 +22,8 @@ import static com.epam.brest.course2015.domain.DocHead.DocHeadFields.*;
  * Created by pavel on 11/10/15.
  */
 public class DocHeadDaoImpl implements DocHeadDao {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Value("${dochead.select}")
     private String docHeadSelectSql;
@@ -67,11 +71,14 @@ public class DocHeadDaoImpl implements DocHeadDao {
 
     @Override
     public List<DocHead> getAllDocHeads() {
+        LOGGER.debug("getAllDocHeads()");
         return jdbcTemplate.query(docHeadSelectSql, new DocHeadRowMapper());
     }
 
     @Override
     public Integer addDocHead(DocHead docHead) {
+        LOGGER.debug("addDocHead(): docType = {}, docDate = {}, docPrice = {}",
+                docHead.getDocumentType(), docHead.getDocumentDate(), docHead.getDocumentPrice());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedParameterJdbcTemplate.update(docHeadInsertSql, getParametersMap(docHead), keyHolder);
         return keyHolder.getKey().intValue();
@@ -79,16 +86,19 @@ public class DocHeadDaoImpl implements DocHeadDao {
 
     @Override
     public DocHead getDocHeadById(Integer documentId) {
+        LOGGER.debug("getDocHeadById(): docId = {}", documentId);
         return jdbcTemplate.queryForObject(docHeadSelectByIdSql, new Object[]{documentId}, new DocHeadRowMapper());
     }
 
     @Override
     public void updateDocHeadPrice(Integer documentId, Integer documentPrice) {
+        LOGGER.debug("updateDocHeadPrice(): docId = {}, docPrice = {}", documentId, documentPrice);
         jdbcTemplate.update(docHeadUpdatePriceSql, new Object[]{documentPrice, documentId});
     }
 
     @Override
     public void deleteDocHeadById(Integer documentId) {
+        LOGGER.debug("deleteDocHeadById(): docId = {}", documentId);
         jdbcTemplate.update(docHeadDeleteByIdSql, new Object[]{documentId});
     }
 }

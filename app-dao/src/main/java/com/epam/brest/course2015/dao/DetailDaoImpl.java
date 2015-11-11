@@ -1,6 +1,8 @@
 package com.epam.brest.course2015.dao;
 
 import com.epam.brest.course2015.domain.Detail;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -20,6 +22,8 @@ import static com.epam.brest.course2015.domain.Detail.DetailFields.*;
  * Created by pavel on 11/7/15.
  */
 public class DetailDaoImpl implements DetailDao{
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Value("${detail.select}")
     private String detailSelectSql;
@@ -63,21 +67,27 @@ public class DetailDaoImpl implements DetailDao{
 
     @Override
     public List<Detail> getAllDetails() {
+        LOGGER.debug("getAllDetails()");
         return jdbcTemplate.query(detailSelectSql, new DetailRowMapper());
     }
 
     @Override
     public void deleteDetail(Integer detailId) {
+        LOGGER.debug("deleteDetail(): detailId = {}", detailId);
         jdbcTemplate.update(detailDeleteSql, new Object[]{detailId});
     }
 
     @Override
     public void updateDetail(Detail detail) {
+        LOGGER.debug("updateDetail(): detailId = {}, detailName = {}"
+                , detail.getDetailId(), detail.getDetailName());
         jdbcTemplate.update(detailUpdateSql, new Object[]{detail.getDetailName(), detail.getDetailId()});
     }
 
     @Override
     public Integer addDetail(Detail detail) {
+        LOGGER.debug("addDetail(): detailId = {}, detailName = {}"
+                , detail.getDetailId(), detail.getDetailName());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedParameterJdbcTemplate.update(detailInsertSql, getParametersMap(detail), keyHolder);
         return keyHolder.getKey().intValue();
@@ -85,6 +95,7 @@ public class DetailDaoImpl implements DetailDao{
 
     @Override
     public Detail getDetailById(Integer detailId) {
+        LOGGER.debug("getDetailById(): detailId = {}", detailId);
         return jdbcTemplate.queryForObject(detailSelectByIdSql, new Object[]{detailId}, new DetailRowMapper());
     }
 

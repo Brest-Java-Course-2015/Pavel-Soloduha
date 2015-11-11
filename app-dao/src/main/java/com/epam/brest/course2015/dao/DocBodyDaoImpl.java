@@ -1,6 +1,8 @@
 package com.epam.brest.course2015.dao;
 
 import com.epam.brest.course2015.domain.DocBody;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -18,6 +20,8 @@ import static com.epam.brest.course2015.domain.DocBody.DocBodyFields.*;
  * Created by pavel on 11/10/15.
  */
 public class DocBodyDaoImpl implements DocBodyDao {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Value("${docbody.selectDocBodyById}")
     private String docBodySelectByIdSql;
@@ -57,11 +61,13 @@ public class DocBodyDaoImpl implements DocBodyDao {
 
     @Override
     public List<DocBody> getDocBodyByDocId(Integer documentId) {
+        LOGGER.debug("getDocBodyByDocId(): docId = {}", documentId);
         return jdbcTemplate.query(docBodySelectByIdSql, new Object[]{documentId}, new DocBodyRowMapper());
     }
 
     @Override
     public void addDocBody(List<DocBody> docBody) {
+        LOGGER.debug("addDocBody(): docBodySize = {}", docBody.size());
         for(DocBody docBody1 : docBody) {
             jdbcTemplate.query(docBodyInsertSql, new Object[]{docBody1}, new DocBodyRowMapper());
         }
@@ -69,6 +75,7 @@ public class DocBodyDaoImpl implements DocBodyDao {
 
     @Override
     public void deleteDocBodyById(Integer documentId) {
+        LOGGER.debug("deleteDocBodyById(): docId = {}", documentId);
         jdbcTemplate.update(docBodyDeleteByIdSql, new Object[]{documentId});
     }
 }
