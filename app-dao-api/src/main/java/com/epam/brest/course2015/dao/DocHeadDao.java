@@ -9,4 +9,12 @@ import java.util.List;
  */
 public interface DocHeadDao {
     List<DocHead> getAllDocHeads();
+
+    Integer addDocHead(DocHead docHead);
+
+    DocHead getDocHeadById(Integer documentId);
+
+    void updateDocHeadPrice(Integer documentId, Integer documentPrice);
+
+    void deleteDocHeadById(Integer documentId);
 }

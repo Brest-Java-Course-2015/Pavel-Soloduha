@@ -14,6 +14,10 @@ public class Document {
     public Document() {
     }
 
+    public Document(DocHead docHead) {
+        this.docHead = docHead;
+    }
+
     public Document(DocHead docHead, List<DocBody> docBody) {
         this.docHead = docHead;
         this.docBody = docBody;

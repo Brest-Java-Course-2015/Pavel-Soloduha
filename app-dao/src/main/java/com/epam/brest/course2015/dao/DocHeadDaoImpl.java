@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -21,6 +23,18 @@ public class DocHeadDaoImpl implements DocHeadDao {
 
     @Value("${dochead.select}")
     private String docHeadSelectSql;
+
+    @Value("${dochead.insertDocHead}")
+    private String docHeadInsertSql;
+
+    @Value("${dochead.selectDocHeadById}")
+    private String docHeadSelectByIdSql;
+
+    @Value("${dochead.updateDocHeadPrice}")
+    private String docHeadUpdatePriceSql;
+
+    @Value("${dochead.deleteDocHeadById}")
+    private String docHeadDeleteByIdSql;
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -54,5 +68,27 @@ public class DocHeadDaoImpl implements DocHeadDao {
     @Override
     public List<DocHead> getAllDocHeads() {
         return jdbcTemplate.query(docHeadSelectSql, new DocHeadRowMapper());
+    }
+
+    @Override
+    public Integer addDocHead(DocHead docHead) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        namedParameterJdbcTemplate.update(docHeadInsertSql, getParametersMap(docHead), keyHolder);
+        return keyHolder.getKey().intValue();
+    }
+
+    @Override
+    public DocHead getDocHeadById(Integer documentId) {
+        return jdbcTemplate.queryForObject(docHeadSelectByIdSql, new Object[]{documentId}, new DocHeadRowMapper());
+    }
+
+    @Override
+    public void updateDocHeadPrice(Integer documentId, Integer documentPrice) {
+        jdbcTemplate.update(docHeadUpdatePriceSql, new Object[]{documentPrice, documentId});
+    }
+
+    @Override
+    public void deleteDocHeadById(Integer documentId) {
+        jdbcTemplate.update(docHeadDeleteByIdSql, new Object[]{documentId});
     }
 }

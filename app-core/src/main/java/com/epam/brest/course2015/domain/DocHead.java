@@ -1,5 +1,7 @@
 package com.epam.brest.course2015.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -11,6 +13,7 @@ public class DocHead {
 
     private Integer documentType;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private Date documentDate;
 
     private Integer documentPrice;
@@ -29,7 +32,7 @@ public class DocHead {
         DOCUMENT_ID("documentId"),
         DOCUMENT_TYPE("documentType"),
         DOCUMENT_DATE("documentDate"),
-        DOCUMENT_PRICE("documentId");
+        DOCUMENT_PRICE("documentPrice");
 
 
         DocHeadFields(String value) {
