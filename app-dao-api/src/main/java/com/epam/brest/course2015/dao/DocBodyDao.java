@@ -14,4 +14,6 @@ public interface DocBodyDao {
     void addDocBody(List<DocBody> docBody);
 
     void deleteDocBodyById(Integer documentId);
+
+    List<DocBody> getAllIncomeDetails();
 }

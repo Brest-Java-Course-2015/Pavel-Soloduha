@@ -32,6 +32,9 @@ public class DocBodyDaoImpl implements DocBodyDao {
     @Value("${docbody.deleteDocBodyById}")
     private String docBodyDeleteByIdSql;
 
+    @Value("${docbody.selectIncomeDetails}")
+    private String incomeDetailsSelectSql;
+
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -44,6 +47,7 @@ public class DocBodyDaoImpl implements DocBodyDao {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(DOCUMENT_ID.getValue(), docBody.getDocumentId());
         parameterSource.addValue(DETAIL_ID.getValue(), docBody.getDetailId());
+        parameterSource.addValue(DETAIL_NAME.getValue(), docBody.getDetailName());
         parameterSource.addValue(DETAIL_COUNT.getValue(), docBody.getDetailCount());
         return parameterSource;
     }
@@ -54,6 +58,7 @@ public class DocBodyDaoImpl implements DocBodyDao {
         public DocBody mapRow(ResultSet resultSet, int i) throws SQLException {
             DocBody docBody = new DocBody(resultSet.getInt(DOCUMENT_ID.getValue()),
                     resultSet.getInt(DETAIL_ID.getValue()),
+                    resultSet.getString(DETAIL_NAME.getValue()),
                     resultSet.getInt(DETAIL_COUNT.getValue()));
             return docBody;
         }
@@ -77,5 +82,11 @@ public class DocBodyDaoImpl implements DocBodyDao {
     public void deleteDocBodyById(Integer documentId) {
         LOGGER.debug("deleteDocBodyById(): docId = {}", documentId);
         jdbcTemplate.update(docBodyDeleteByIdSql, new Object[]{documentId});
+    }
+
+    @Override
+    public List<DocBody> getAllIncomeDetails() {
+        LOGGER.debug("getAllIncomeDetails():");
+        return jdbcTemplate.query(incomeDetailsSelectSql, new DocBodyRowMapper());
     }
 }

@@ -1,5 +1,6 @@
 package com.epam.brest.course2015.rest;
 
+import com.epam.brest.course2015.domain.DocBody;
 import com.epam.brest.course2015.domain.Document;
 import com.epam.brest.course2015.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,12 @@ public class DocumentRestController {
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteDocument(@PathVariable(value = "id") Integer documentId) {
         documentService.deleteDocument(documentId);
+    }
+
+    @RequestMapping(value = "/docinc", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.FOUND)
+    public List<DocBody> getAllIncomeDetails() {
+        return documentService.getAllIncomeDetails();
     }
 
 }

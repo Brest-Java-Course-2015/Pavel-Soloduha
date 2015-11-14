@@ -76,4 +76,10 @@ public class DocumentServiceImpl implements DocumentService {
         docBodyDao.deleteDocBodyById(documentId);
         docHeadDao.deleteDocHeadById(documentId);
     }
+
+    @Override
+    public List<DocBody> getAllIncomeDetails() {
+        LOGGER.debug("getAllIncomeDetails()");
+        return docBodyDao.getAllIncomeDetails();
+    }
 }

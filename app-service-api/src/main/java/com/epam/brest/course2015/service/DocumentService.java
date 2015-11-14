@@ -1,5 +1,6 @@
 package com.epam.brest.course2015.service;
 
+import com.epam.brest.course2015.domain.DocBody;
 import com.epam.brest.course2015.domain.DocHead;
 import com.epam.brest.course2015.domain.Document;
 
@@ -19,4 +20,6 @@ public interface DocumentService {
     void updateDocumentPrice(Integer documentId, Integer documentPrice);
 
     void deleteDocument(Integer documentId);
+
+    List<DocBody> getAllIncomeDetails();
 }
