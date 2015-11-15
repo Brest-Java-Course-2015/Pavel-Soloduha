@@ -1,6 +1,7 @@
 package com.epam.brest.course2015.rest;
 
 import com.epam.brest.course2015.domain.DocBody;
+import com.epam.brest.course2015.domain.DocHead;
 import com.epam.brest.course2015.domain.Document;
 import com.epam.brest.course2015.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,4 +57,9 @@ public class DocumentRestController {
         return documentService.getAllIncomeDetails();
     }
 
+    @RequestMapping(value = "/docheads", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.FOUND)
+    public List<DocHead> getAllDocHeads() {
+        return documentService.getAllDocHeads();
+    }
 }

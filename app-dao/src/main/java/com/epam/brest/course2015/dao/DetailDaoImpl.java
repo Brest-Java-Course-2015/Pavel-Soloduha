@@ -86,8 +86,8 @@ public class DetailDaoImpl implements DetailDao{
 
     @Override
     public Integer addDetail(Detail detail) {
-        LOGGER.debug("addDetail(): detailId = {}, detailName = {}"
-                , detail.getDetailId(), detail.getDetailName());
+        LOGGER.debug("addDetail(): detailName = {}"
+                , detail.getDetailName());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedParameterJdbcTemplate.update(detailInsertSql, getParametersMap(detail), keyHolder);
         return keyHolder.getKey().intValue();

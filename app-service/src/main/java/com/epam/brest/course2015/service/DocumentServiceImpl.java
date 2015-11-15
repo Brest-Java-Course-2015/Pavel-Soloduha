@@ -82,4 +82,10 @@ public class DocumentServiceImpl implements DocumentService {
         LOGGER.debug("getAllIncomeDetails()");
         return docBodyDao.getAllIncomeDetails();
     }
+
+    @Override
+    public List<DocHead> getAllDocHeads() {
+        LOGGER.debug("getAllDocHeads()");
+        return docHeadDao.getAllDocHeads();
+    }
 }

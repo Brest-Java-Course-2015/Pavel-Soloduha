@@ -6,6 +6,8 @@ INSERT INTO DETAIL (detailid, detailname)
     VALUES (16, 'Гвоздь');
 INSERT INTO DETAIL (detailid, detailname)
     VALUES (25, 'Лопата');
+INSERT INTO DETAIL (detailid, detailname)
+    VALUES (44, 'Кирка');
 
 INSERT INTO DOCHEAD (documentid, documenttype, documentdate, documentprice)
     VALUES (40, 1, NOW(), 5000);

@@ -1,11 +1,14 @@
 package com.epam.brest.course2015.app;
 
+import com.epam.brest.course2015.domain.Detail;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Scanner;
@@ -31,6 +34,9 @@ public class Main {
 
     @Value("${point.docInc}")
     private String urlDocInc;
+
+    @Value("${point.docHeads}")
+    private String urlDocHeads;
 
     @Value("${point.details}")
     private String urlDetails;
@@ -69,7 +75,7 @@ public class Main {
         System.out.println("|        7. Get all details                |");
         System.out.println("|        8. Add detail                     |");
         System.out.println("|        9. Delete detail by id            |");
-        System.out.println("|        10. Exit                           |");
+        System.out.println("|        10. Exit                          |");
         System.out.println("============================================");
         while (swValue != 10) {
             System.out.print("Select option: ");
@@ -128,13 +134,23 @@ public class Main {
     }
 
     private void getAllDocs() {
-        ResponseEntity responseEntity = restTemplate.getForEntity(url + urlDocs, Object.class);
-        System.out.println("Docs: " + responseEntity.getBody());
+        ResponseEntity responseEntity;
+        try {
+            responseEntity = restTemplate.getForEntity(url + urlDocs, Object.class);
+            System.out.println("    Docs: " + responseEntity.getBody());
+        } catch (CustomException ex) {
+            System.out.println("    ERROR: " + ex.getMessage());
+        }
     }
 
-//    TODO
     private void getAllDocHeads() {
-
+        ResponseEntity responseEntity;
+        try {
+            responseEntity = restTemplate.getForEntity(url + urlDocHeads, Object.class);
+            System.out.println("    DocHeads: " + responseEntity.getBody());
+        } catch (CustomException ex) {
+            System.out.println("    ERROR: " + ex.getMessage());
+        }
     }
 
     private void getDocById() {
@@ -155,26 +171,61 @@ public class Main {
 
 //    TODO
     private void addDocum() {
-
     }
 
-//    TODO
     private void deleteDocById() {
+        Integer docId = 0;
+        System.out.print("    Enter document Id: ");
+        if(sc.hasNextInt()) {
+            docId = sc.nextInt();
+        }
 
+        try {
+            restTemplate.delete(url + urlDoc + "/" + docId.toString(), Object.class);
+            System.out.println("    Document is deleted");
+        } catch (CustomException ex) {
+            System.out.println("    ERROR: " + ex.getMessage());
+        }
     }
 
-//    TODO
     private void getAllDetails() {
-
+        ResponseEntity responseEntity;
+        try {
+            responseEntity = restTemplate.getForEntity(url + urlDetails, Object.class);
+            System.out.println("    Details: " + responseEntity.getBody());
+        } catch (CustomException ex) {
+            System.out.println("    ERROR: " + ex.getMessage());
+        }
     }
 
-//    TODO
     private void addDetail() {
+        String detName = "";
+        System.out.print("    Enter new detail name: ");
+        if(sc.hasNext()) {
+            detName = sc.next();
+        }
+        Detail newDetail = new Detail(detName);
 
+        try {
+            restTemplate.postForObject(url + urlDetail, newDetail, Object.class);
+            System.out.println("    Detail is added");
+        } catch (CustomException ex) {
+            System.out.println("    ERROR: " + ex.getMessage());
+        }
     }
 
-//    TODO
     private void deleteDetailById() {
+        Integer detailId = 0;
+        System.out.print("    Enter detail Id: ");
+        if(sc.hasNextInt()) {
+            detailId = sc.nextInt();
+        }
 
+        try {
+            restTemplate.delete(url + urlDetail + "/" + detailId.toString(), Object.class);
+            System.out.println("    Detail is deleted");
+        } catch (CustomException ex) {
+            System.out.println("    ERROR: " + ex.getMessage());
+        }
     }
 }
