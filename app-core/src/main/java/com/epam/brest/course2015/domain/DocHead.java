@@ -28,6 +28,29 @@ public class DocHead {
         this.documentPrice = documentPrice;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DocHead docHead = (DocHead) o;
+
+        if (!getDocumentId().equals(docHead.getDocumentId())) return false;
+        if (!getDocumentType().equals(docHead.getDocumentType())) return false;
+        if (!getDocumentDate().equals(docHead.getDocumentDate())) return false;
+        return getDocumentPrice().equals(docHead.getDocumentPrice());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getDocumentId().hashCode();
+        result = 31 * result + getDocumentType().hashCode();
+        result = 31 * result + getDocumentDate().hashCode();
+        result = 31 * result + getDocumentPrice().hashCode();
+        return result;
+    }
+
     public enum DocHeadFields {
         DOCUMENT_ID("documentId"),
         DOCUMENT_TYPE("documentType"),

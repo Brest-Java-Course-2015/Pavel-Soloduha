@@ -34,3 +34,5 @@ INSERT INTO DOCBODY (documentid, detailid, detailcount)
     VALUES (50, 25, 1);
 INSERT INTO DOCBODY (documentid, detailid, detailcount)
     VALUES (50, 16, 70);
+INSERT INTO DOCBODY (documentid, detailid, detailcount)
+    VALUES (50, 12, 2);

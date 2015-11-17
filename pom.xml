@@ -15,6 +15,7 @@
         <module>app-dao</module>
         <module>app-core</module>
         <module>app-termclient</module>
+        <module>app-test</module>
     </modules>
 
     <distributionManagement>

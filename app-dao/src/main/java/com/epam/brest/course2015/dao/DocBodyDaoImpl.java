@@ -70,10 +70,12 @@ public class DocBodyDaoImpl implements DocBodyDao {
         return jdbcTemplate.query(docBodySelectByIdSql, new Object[]{documentId}, new DocBodyRowMapper());
     }
 
+    //TODO fixme
     @Override
     public void addDocBody(List<DocBody> docBody) {
         LOGGER.debug("addDocBody(): docBodySize = {}", docBody.size());
         for(DocBody docBody1 : docBody) {
+            System.out.println("docBody1 = " + docBody1);
             jdbcTemplate.query(docBodyInsertSql, new Object[]{docBody1}, new DocBodyRowMapper());
         }
     }
@@ -84,6 +86,7 @@ public class DocBodyDaoImpl implements DocBodyDao {
         jdbcTemplate.update(docBodyDeleteByIdSql, new Object[]{documentId});
     }
 
+    //TODO fixme
     @Override
     public List<DocBody> getAllIncomeDetails() {
         LOGGER.debug("getAllIncomeDetails():");
