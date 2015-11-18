@@ -19,4 +19,8 @@ public interface DetailService {
     Integer addDetail(Detail detail);
 
     Detail getDetailById(Integer detailId);
+
+    Boolean hasReferences(Integer detailId);
+
+    Boolean isPresentInTable(Integer detailId);
 }

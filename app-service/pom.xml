@@ -33,6 +33,10 @@
             <artifactId>app-service-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.epam.brest.course2015</groupId>
+            <artifactId>app-test</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
         </dependency>
@@ -55,6 +59,10 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
         </dependency>
     </dependencies>
 
