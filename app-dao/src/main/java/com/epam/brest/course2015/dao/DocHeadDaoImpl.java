@@ -40,6 +40,9 @@ public class DocHeadDaoImpl implements DocHeadDao {
     @Value("${dochead.deleteDocHeadById}")
     private String docHeadDeleteByIdSql;
 
+    @Value("${dochead.documentdPresSql}")
+    private String docHeadDocumentdPresSql;
+
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -100,5 +103,11 @@ public class DocHeadDaoImpl implements DocHeadDao {
     public void deleteDocHeadById(Integer documentId) {
         LOGGER.debug("deleteDocHeadById(): docId = {}", documentId);
         jdbcTemplate.update(docHeadDeleteByIdSql, new Object[]{documentId});
+    }
+
+    @Override
+    public Boolean isPresentDocument(Integer documentId) {
+        LOGGER.debug("isPresentDocument():");
+        return jdbcTemplate.queryForObject(docHeadDocumentdPresSql, new Object[]{documentId}, Integer.class) > 0 ? true : false;
     }
 }

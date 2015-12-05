@@ -35,6 +35,12 @@ public class DocBodyDaoImpl implements DocBodyDao {
     @Value("${docbody.selectIncomeDetails}")
     private String incomeDetailsSelectSql;
 
+    @Value("${docbody.detailPresId}")
+    private String detailIdPresSql;
+
+    @Value("${docbody.selectOutputDetails}")
+    private String outputDetailsSelectSql;
+
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -70,13 +76,13 @@ public class DocBodyDaoImpl implements DocBodyDao {
         return jdbcTemplate.query(docBodySelectByIdSql, new Object[]{documentId}, new DocBodyRowMapper());
     }
 
-    //TODO fixme
     @Override
     public void addDocBody(List<DocBody> docBody) {
         LOGGER.debug("addDocBody(): docBodySize = {}", docBody.size());
         for(DocBody docBody1 : docBody) {
-            System.out.println("docBody1 = " + docBody1);
-            jdbcTemplate.query(docBodyInsertSql, new Object[]{docBody1}, new DocBodyRowMapper());
+            jdbcTemplate.update(docBodyInsertSql,new Object[]{docBody1.getDocumentId()
+                , docBody1.getDetailId()
+                , docBody1.getDetailCount()});
         }
     }
 
@@ -91,5 +97,17 @@ public class DocBodyDaoImpl implements DocBodyDao {
     public List<DocBody> getAllIncomeDetails() {
         LOGGER.debug("getAllIncomeDetails():");
         return jdbcTemplate.query(incomeDetailsSelectSql, new DocBodyRowMapper());
+    }
+
+    @Override
+    public Boolean isPresentDetail(Integer detailId) {
+        LOGGER.debug("isPresentDetail():");
+        return jdbcTemplate.queryForObject(detailIdPresSql, new Object[]{detailId}, Integer.class) > 0 ? true : false;
+    }
+
+    @Override
+    public List<DocBody> getAllOutputDetails() {
+        LOGGER.debug("getAllIncomeDetails():");
+        return jdbcTemplate.query(outputDetailsSelectSql, new DocBodyRowMapper());
     }
 }

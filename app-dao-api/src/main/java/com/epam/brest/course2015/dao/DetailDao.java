@@ -19,4 +19,10 @@ public interface DetailDao {
     Integer addDetail(Detail detail);
 
     Detail getDetailById(Integer detailId);
+
+    Boolean hasReferences(Integer detailId);
+
+    Boolean isIdPresentInTable(Integer detailId);
+
+    Boolean isNamePresentInTable(String detailName);
 }

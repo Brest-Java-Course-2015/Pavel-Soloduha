@@ -17,4 +17,6 @@ public interface DocHeadDao {
     void updateDocHeadPrice(Integer documentId, Integer documentPrice);
 
     void deleteDocHeadById(Integer documentId);
+
+    Boolean isPresentDocument(Integer documentId);
 }

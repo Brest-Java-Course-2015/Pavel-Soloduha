@@ -3,18 +3,17 @@ package com.epam.brest.course2015.dao;
 import com.epam.brest.course2015.domain.Detail;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.junit.*;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 /**
  * Created by pavel on 11/16/15.
  */
@@ -40,17 +39,17 @@ public class DetailDaoImplTest {
     public void testGetAllDetails() {
         LOGGER.debug("test: getAllDetails()");
         List<Detail> details = detailDao.getAllDetails();
-        assertTrue(details.size() == 5);
+        Assert.assertTrue(details.size() == 5);
     }
 
     @Test
     public void testDeleteDetail() {
         LOGGER.debug("test: deleteDetail()");
         int sizeBefore = detailDao.getAllDetails().size();
-        assertTrue(sizeBefore > 0);
+        Assert.assertTrue(sizeBefore > 0);
         detailDao.deleteDetail(DETAIL_ID);
         int sizeAfter = detailDao.getAllDetails().size();
-        assertTrue(sizeBefore - 1 == sizeAfter);
+        Assert.assertTrue(sizeBefore - 1 == sizeAfter);
     }
 
     @Test
@@ -61,24 +60,59 @@ public class DetailDaoImplTest {
         Detail newDetail = detailDao.getDetailById(DETAIL.getDetailId());
         Integer oldDetailId = oldDetail.getDetailId();
         Integer newDetailId = newDetail.getDetailId();
-        assertTrue(oldDetailId.equals(newDetailId));
+        Assert.assertTrue(oldDetailId.equals(newDetailId));
     }
 
     @Test
     public void testAddDetail() {
         LOGGER.debug("test: addDetail()");
         Integer detailId = detailDao.addDetail(NEW_DETAIL);
-        assertNotNull(detailId);
+        Assert.assertNotNull(detailId);
         Detail detail = detailDao.getDetailById(detailId);
-        assertTrue(detail.getDetailName().equals(NEW_DETAIL_NAME));
+        Assert.assertTrue(detail.getDetailName().equals(NEW_DETAIL_NAME));
     }
 
     @Test
     public void testGetDetailById() {
         LOGGER.debug("test: getDetailById()");
         Detail detail = detailDao.getDetailById(DETAIL_ID);
-        assertNotNull(detail);
-        assertTrue(detail.getDetailName().equals(DETAIL_NAME));
+        Assert.assertNotNull(detail);
+        Assert.assertTrue(detail.getDetailName().equals(DETAIL_NAME));
     }
 
+    @Test
+    public void testHasReferencesTrue() {
+        LOGGER.debug("test: hasReferencesTrue()");
+        Assert.assertTrue(detailDao.hasReferences(16));
+    }
+
+    @Test
+    public void testHasReferencesFalse() {
+        LOGGER.debug("test: hasReferencesFalse()");
+        Assert.assertTrue(!detailDao.hasReferences(1));
+    }
+
+    @Test
+    public void testIsIdPresentInTable() {
+        LOGGER.debug("test: isIdPresentInTable()");
+        Assert.assertTrue(detailDao.isIdPresentInTable(16));
+    }
+
+    @Test(expected = AssertionError.class)
+    public void testIsIdPresentInTableExc() {
+        LOGGER.debug("test: isIdPresentInTableExc()");
+        Assert.assertTrue(detailDao.isIdPresentInTable(1));
+    }
+
+    @Test
+    public void testNameIdPresentInTable() {
+        LOGGER.debug("test: isNamePresentInTable()");
+        Assert.assertTrue(detailDao.isNamePresentInTable("Лопата"));
+    }
+
+    @Test(expected = AssertionError.class)
+    public void testIsNamePresentInTableExc() {
+        LOGGER.debug("test: isNamePresentInTableExc()");
+        Assert.assertTrue(detailDao.isNamePresentInTable("Шайба"));
+    }
 }

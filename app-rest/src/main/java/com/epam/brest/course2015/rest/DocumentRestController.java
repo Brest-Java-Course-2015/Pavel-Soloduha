@@ -57,6 +57,12 @@ public class DocumentRestController {
         return documentService.getAllIncomeDetails();
     }
 
+    @RequestMapping(value = "/docout", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.FOUND)
+    public List<DocBody> getAllOutputDetails() {
+        return documentService.getAllOutputDetails();
+    }
+
     @RequestMapping(value = "/docheads", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.FOUND)
     public List<DocHead> getAllDocHeads() {

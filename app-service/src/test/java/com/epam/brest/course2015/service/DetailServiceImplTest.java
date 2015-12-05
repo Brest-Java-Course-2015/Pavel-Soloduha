@@ -63,19 +63,17 @@ public class DetailServiceImplTest {
         detailService.deleteDetail(-10);
     }
 
-//    TODO need impl of isPresentInTable(Integer)
-//    @Test(expected = IllegalArgumentException.class)
-//    public void testDeleteAbsentDetail() throws Exception {
-//        LOGGER.debug("test: deleteAbsentDetail()");
-//        detailService.deleteDetail(68);
-//    }
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteAbsentDetail() throws Exception {
+        LOGGER.debug("test: deleteAbsentDetail()");
+        detailService.deleteDetail(68);
+    }
 
-    //TODO need impl of hasReferences(Integer)
-//    @Test(expected = IllegalArgumentException.class)
-//    public void testDeleteDetailForKey() throws Exception {
-//        LOGGER.debug("test: deleteDetailForKey()");
-//        detailService.deleteDetail(2);
-//    }
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteDetailForKey() throws Exception {
+        LOGGER.debug("test: deleteDetailForKey()");
+        detailService.deleteDetail(2);
+    }
 
     @Test
     public void testUpdateDetail() throws Exception {
@@ -109,12 +107,11 @@ public class DetailServiceImplTest {
         detailService.updateDetail(new Detail(-10, DETAIL_NAME_1));
     }
 
-//  TODO need impl of isPresentInTable(Integer)
-//    @Test(expected = IllegalArgumentException.class)
-//    public void testUpdateAbsentDetail() throws Exception {
-//        LOGGER.debug("test: updateAbsentDetail()");
-//        detailService.updateDetail(new Detail(60, DETAIL_NAME));
-//    }
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateAbsentDetail() throws Exception {
+        LOGGER.debug("test: updateAbsentDetail()");
+        detailService.updateDetail(new Detail(60, DETAIL_NAME_1));
+    }
 
     @Test
     public void testAddDetail() throws Exception {
@@ -137,12 +134,11 @@ public class DetailServiceImplTest {
         detailService.addDetail(new Detail());
     }
 
-//  TODO need impl of isPresentInTable(Integer)
-//    @Test(expected = IllegalArgumentException.class)
-//    public void testAddExistDetail() throws Exception {
-//        LOGGER.debug("test: addExistDetail()");
-//        detailService.addDetail(new Detail(DETAIL_NAME_2));
-//    }
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddExistDetail() throws Exception {
+        LOGGER.debug("test: addExistDetail()");
+        detailService.addDetail(new Detail(DETAIL_NAME_2));
+    }
 
     @Test
     public void testGetDetailById() throws Exception {
@@ -163,10 +159,21 @@ public class DetailServiceImplTest {
         detailService.getDetailById(-10);
     }
 
-//  TODO need impl of isPresentInTable(Integer)
-//    @Test(expected = IllegalArgumentException.class)
-//    public void testGetAbsentDetailById() throws Exception {
-//        LOGGER.debug("test: getAbsentDetailById()");
-//        detailService.getDetailById(15);
-//    }
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetAbsentDetailById() throws Exception {
+        LOGGER.debug("test: getAbsentDetailById()");
+        detailService.getDetailById(15);
+    }
+
+    @Test
+    public void testHasReferencesTrue() {
+        LOGGER.debug("test: hasReferencesTrue()");
+        Assert.assertTrue(detailService.hasReferences(16));
+    }
+
+    @Test
+    public void testHasReferencesFalse() {
+        LOGGER.debug("test: hasReferencesFalse()");
+        Assert.assertTrue(!detailService.hasReferences(1));
+    }
 }

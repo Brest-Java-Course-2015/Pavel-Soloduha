@@ -16,4 +16,8 @@ public interface DocBodyDao {
     void deleteDocBodyById(Integer documentId);
 
     List<DocBody> getAllIncomeDetails();
+
+    Boolean isPresentDetail(Integer detailId);
+
+    List<DocBody> getAllOutputDetails();
 }

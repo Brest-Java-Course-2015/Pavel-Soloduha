@@ -40,6 +40,15 @@ public class DetailDaoImpl implements DetailDao{
     @Value("${detail.selectDetailById}")
     private String detailSelectByIdSql;
 
+    @Value("${detail.hasRef}")
+    private String detailHasRefSql;
+
+    @Value("${detail.presId}")
+    private String detailIdPresSql;
+
+    @Value("${detail.presName}")
+    private String detailNamePresSql;
+
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -99,4 +108,21 @@ public class DetailDaoImpl implements DetailDao{
         return jdbcTemplate.queryForObject(detailSelectByIdSql, new Object[]{detailId}, new DetailRowMapper());
     }
 
+    @Override
+    public Boolean hasReferences(Integer detailId) {
+        LOGGER.debug("hasReferences(): detailId = {}", detailId);
+        return jdbcTemplate.queryForObject(detailHasRefSql, new Object[]{detailId}, Integer.class) > 0 ? true : false;
+    }
+
+    @Override
+    public Boolean isIdPresentInTable(Integer detailId) {
+        LOGGER.debug("isIdPresentInTable(): detailId = {}", detailId);
+        return jdbcTemplate.queryForObject(detailIdPresSql, new Object[]{detailId}, Integer.class) > 0 ? true : false;
+    }
+
+    @Override
+    public Boolean isNamePresentInTable(String detailName) {
+        LOGGER.debug("isNamePresentInTable(): detailName = {}", detailName);
+        return jdbcTemplate.queryForObject(detailNamePresSql, new Object[]{detailName}, Integer.class) > 0 ? true : false;
+    }
 }

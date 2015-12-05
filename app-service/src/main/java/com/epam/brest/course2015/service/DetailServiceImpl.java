@@ -24,17 +24,23 @@ public class DetailServiceImpl implements DetailService {
         this.detailDao = detailDao;
     }
 
-    //TODO impl method
     @Override
     public Boolean hasReferences(Integer detailId) {
-        return false;
+        LOGGER.debug("hasReferences(): detailId = {}", detailId);
+        return detailDao.hasReferences(detailId);
     }
 
     @Override
-    public Boolean isPresentInTable(Integer detailId) {
-        return true;
+    public Boolean isIdPresentInTable(Integer detailId) {
+        LOGGER.debug("isIdPresentInTable(): detailId = {}", detailId);
+        return detailDao.isIdPresentInTable(detailId);
     }
 
+    @Override
+    public Boolean isNamePresentInTable(String detailName) {
+        LOGGER.debug("isNamePresentInTable(): detailName = {}", detailName);
+        return detailDao.isNamePresentInTable(detailName);
+    }
 
     @Override
     public List<Detail> getAllDetails() {
@@ -47,7 +53,7 @@ public class DetailServiceImpl implements DetailService {
         LOGGER.debug("deleteDetail(): detailId = {}", detailId);
         Assert.notNull(detailId, "DetailId must not be null.");
         Assert.isTrue(detailId > 0);
-        Assert.isTrue(isPresentInTable(detailId));
+        Assert.isTrue(isIdPresentInTable(detailId));
         Assert.isTrue(!hasReferences(detailId));
         detailDao.deleteDetail(detailId);
     }
@@ -59,7 +65,7 @@ public class DetailServiceImpl implements DetailService {
         Assert.notNull(detail.getDetailId(), "DetailId must not be null");
         Assert.hasText(detail.getDetailName(), "DetailName must not be null");
         Assert.isTrue(detail.getDetailId() > 0);
-        Assert.isTrue(isPresentInTable(detail.getDetailId()));
+        Assert.isTrue(isIdPresentInTable(detail.getDetailId()));
         detailDao.updateDetail(detail);
     }
 
@@ -68,6 +74,7 @@ public class DetailServiceImpl implements DetailService {
         Assert.notNull(detail, "Detail must not be null");
         LOGGER.debug("addDetail(): detailId = {}, detailName = {}", detail.getDetailId(), detail.getDetailName());
         Assert.hasText(detail.getDetailName(), "DetailName must not be null");
+        Assert.isTrue(!isNamePresentInTable(detail.getDetailName()));
         return detailDao.addDetail(detail);
     }
 
@@ -76,6 +83,7 @@ public class DetailServiceImpl implements DetailService {
         LOGGER.debug("getDetailById(): detailId = {}", detailId);
         Assert.notNull(detailId, "DetailId must not be null");
         Assert.isTrue(detailId > 0);
+        Assert.isTrue(isIdPresentInTable(detailId));
         return detailDao.getDetailById(detailId);
     }
 }

@@ -22,5 +22,7 @@ public interface DetailService {
 
     Boolean hasReferences(Integer detailId);
 
-    Boolean isPresentInTable(Integer detailId);
+    Boolean isIdPresentInTable(Integer detailId);
+
+    Boolean isNamePresentInTable(String detailName);
 }

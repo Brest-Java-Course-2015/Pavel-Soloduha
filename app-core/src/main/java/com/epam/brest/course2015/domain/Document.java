@@ -23,6 +23,11 @@ public class Document {
         this.docBody = docBody;
     }
 
+    public Document(Document document) {
+        this.docHead = document.getDocHead();
+        this.docBody = document.getDocBody();
+    }
+
     public DocHead getDocHead() {
         return docHead;
     }
@@ -45,5 +50,25 @@ public class Document {
                 "docHead=" + docHead +
                 ", docBody=" + docBody +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Document document = (Document) o;
+
+        if (getDocHead() != null ? !getDocHead().equals(document.getDocHead()) : document.getDocHead() != null)
+            return false;
+        return !(getDocBody() != null ? !getDocBody().equals(document.getDocBody()) : document.getDocBody() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getDocHead() != null ? getDocHead().hashCode() : 0;
+        result = 31 * result + (getDocBody() != null ? getDocBody().hashCode() : 0);
+        return result;
     }
 }

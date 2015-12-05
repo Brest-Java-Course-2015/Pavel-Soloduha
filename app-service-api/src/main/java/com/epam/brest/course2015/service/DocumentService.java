@@ -24,4 +24,10 @@ public interface DocumentService {
     List<DocBody> getAllIncomeDetails();
 
     List<DocHead> getAllDocHeads();
+
+    Boolean isPresentDocumentInTable(Integer documentId);
+
+    Boolean isPresentDetailInTable(Integer detailId);
+
+    List<DocBody> getAllOutputDetails();
 }

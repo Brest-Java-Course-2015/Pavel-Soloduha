@@ -12,7 +12,7 @@
             <appender-ref ref="Console"/>
             <appender-ref ref="File"/>
         </Root>
-        <Logger name="org.springframework" level="INFO"/>
+        <Logger name="org.springframework" level="DEBUG"/>
         <Logger name="com.epam.brest.course2015" level="DEBUG"/>
     </Loggers>
 </Configuration>
