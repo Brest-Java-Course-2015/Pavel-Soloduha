@@ -35,7 +35,6 @@ public class DocHead {
 
         DocHead docHead = (DocHead) o;
 
-//        if (!getDocumentId().equals(docHead.getDocumentId())) return false;
         if (!getDocumentType().equals(docHead.getDocumentType())) return false;
         if (!getDocumentDate().equals(docHead.getDocumentDate())) return false;
         return getDocumentPrice().equals(docHead.getDocumentPrice());

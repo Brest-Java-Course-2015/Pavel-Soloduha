@@ -30,4 +30,6 @@ public interface DocumentService {
     Boolean isPresentDetailInTable(Integer detailId);
 
     List<DocBody> getAllOutputDetails();
+
+    List<DocBody> getCurrentState();
 }

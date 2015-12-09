@@ -92,7 +92,6 @@ public class DocBodyDaoImpl implements DocBodyDao {
         jdbcTemplate.update(docBodyDeleteByIdSql, new Object[]{documentId});
     }
 
-    //TODO fixme
     @Override
     public List<DocBody> getAllIncomeDetails() {
         LOGGER.debug("getAllIncomeDetails():");

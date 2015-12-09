@@ -23,6 +23,13 @@ public class DocBody {
         this.detailCount = detailCount;
     }
 
+    public DocBody(DocBody docBody) {
+        this.documentId = docBody.getDocumentId();
+        this.detailId = docBody.getDetailId();
+        this.detailName = docBody.getDetailName();
+        this.detailCount = docBody.getDetailCount();
+    }
+
     public enum DocBodyFields {
         DOCUMENT_ID("documentId"),
         DETAIL_ID("detailId"),

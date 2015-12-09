@@ -54,7 +54,7 @@ public class DocHeadDaoImplTest {
 
     @Test
     public void testGetDocHeadById() {
-        LOGGER.debug("test: GetDocHeadById()");
+        LOGGER.debug("test: getDocHeadById()");
         int docId = docHeadDao.addDocHead(DOC_HEAD);
         DocHead docHead = docHeadDao.getDocHeadById(docId);
         Assert.assertTrue(docHead.equals(DOC_HEAD));
@@ -70,7 +70,7 @@ public class DocHeadDaoImplTest {
 
     @Test(expected = EmptyResultDataAccessException.class)
     public void testDeleteDocHeadByIdEmptyResultExc() {
-        LOGGER.debug("test: deleteDocHeadById()");
+        LOGGER.debug("test: deleteDocHeadByIdEmptyResultExc()");
         docHeadDao.addDocHead(DOC_HEAD);
         DocHead docHead = docHeadDao.getDocHeadById(DOCUMENT_ID_1);
         docHeadDao.deleteDocHeadById(DOCUMENT_ID_1);
@@ -79,8 +79,20 @@ public class DocHeadDaoImplTest {
 
     @Test(expected = DataIntegrityViolationException.class)
     public void testDeleteDocHeadByIdForeignKeyExc() {
-        LOGGER.debug("test: deleteDocHeadById()");
+        LOGGER.debug("test: deleteDocHeadByIdForeignKeyExc()");
         DocHead docHead = docHeadDao.getDocHeadById(DOCUMENT_ID_2);
         docHeadDao.deleteDocHeadById(DOCUMENT_ID_2);
+    }
+
+    @Test
+    public void testIsPresentDocument() {
+        LOGGER.debug("test: isPresentDocument()");
+        Assert.assertTrue(docHeadDao.isPresentDocument(DOCUMENT_ID_2));
+    }
+
+    @Test
+    public void testIsPresentDocumentExc() {
+        LOGGER.debug("test: isPresentDocumentExc()");
+        Assert.assertTrue(!docHeadDao.isPresentDocument(99));
     }
 }

@@ -44,6 +44,9 @@ public class Main {
     @Value("${point.detail}")
     private String urlDetail;
 
+    @Value("${point.curState}")
+    private String urlCurState;
+
     Scanner sc = new Scanner(System.in);
     ClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
     RestTemplate restTemplate = new RestTemplate(requestFactory);
@@ -126,11 +129,14 @@ public class Main {
         }
     }
 
-
-
-//    TODO
     private void getCurrentState() {
-
+        ResponseEntity responseEntity;
+        try {
+            responseEntity = restTemplate.getForEntity(url + urlCurState, Object.class);
+            System.out.println("    Docs: " + responseEntity.getBody());
+        } catch (CustomException ex) {
+            System.out.println("    ERROR: " + ex.getMessage());
+        }
     }
 
     private void getAllDocs() {

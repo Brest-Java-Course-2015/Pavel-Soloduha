@@ -21,7 +21,7 @@ public class DocumentRestController {
     DocumentService documentService;
 
     @RequestMapping(value = "/docs", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.FOUND)
+    @ResponseStatus(value = HttpStatus.OK)
     public List<Document> getAllDocuments() {
         return documentService.getAllDocuments();
     }
@@ -33,7 +33,7 @@ public class DocumentRestController {
     }
 
     @RequestMapping(value = "/doc/{id}", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.FOUND)
+    @ResponseStatus(value = HttpStatus.OK)
     public Document getDocumentById(@PathVariable(value = "id") Integer documentId) {
         return documentService.getDocumentById(documentId);
     }
@@ -52,20 +52,26 @@ public class DocumentRestController {
     }
 
     @RequestMapping(value = "/docinc", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.FOUND)
+    @ResponseStatus(value = HttpStatus.OK)
     public List<DocBody> getAllIncomeDetails() {
         return documentService.getAllIncomeDetails();
     }
 
     @RequestMapping(value = "/docout", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.FOUND)
+    @ResponseStatus(value = HttpStatus.OK)
     public List<DocBody> getAllOutputDetails() {
         return documentService.getAllOutputDetails();
     }
 
     @RequestMapping(value = "/docheads", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.FOUND)
+    @ResponseStatus(value = HttpStatus.OK)
     public List<DocHead> getAllDocHeads() {
         return documentService.getAllDocHeads();
+    }
+
+    @RequestMapping(value = "/curstat", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<DocBody> getCurrentState() {
+        return documentService.getCurrentState();
     }
 }
