@@ -17,7 +17,7 @@ public interface DocumentService {
 
     Document getDocumentById(Integer documentId);
 
-    void updateDocumentPrice(Integer documentId, Integer documentPrice);
+    void updateDocument(Document document);
 
     void deleteDocument(Integer documentId);
 

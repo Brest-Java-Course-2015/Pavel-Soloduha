@@ -52,8 +52,8 @@ public class DocumentServiceImpl implements DocumentService {
         Assert.notNull(document.getDocHead(), "DocumentHead must not be null.");
         Assert.notNull(document.getDocBody(), "DocumentBody must not be null.");
         DocHead tmpHead = document.getDocHead();
-        LOGGER.debug("addDocument(): docType = {}, docDate = {}, docPrice = {}",
-                tmpHead.getDocumentType(), tmpHead.getDocumentDate(), tmpHead.getDocumentPrice());
+        LOGGER.debug("addDocument(): docType = {}, docDate = {}",
+                tmpHead.getDocumentType(), tmpHead.getDocumentDate());
         LOGGER.debug("addDocument(): docBodySize = {}", document.getDocBody().size());
         Integer docId = docHeadDao.addDocHead(document.getDocHead());
         List<DocBody> bodyList = document.getDocBody();
@@ -76,14 +76,16 @@ public class DocumentServiceImpl implements DocumentService {
         return new Document(docHead, docBody);
     }
 
+    //fixme
     @Override
-    public void updateDocumentPrice(Integer documentId, Integer documentPrice) {
-        Assert.notNull(documentId);
-        Assert.notNull(documentPrice);
-        LOGGER.debug("updateDocumentPrice(): docId = {}, docPrice", documentId, documentPrice);
-        Assert.isTrue(isPresentDocumentInTable(documentId));
-        Assert.isTrue(documentPrice >= 0);
-        docHeadDao.updateDocHeadPrice(documentId, documentPrice);
+    public void updateDocument(Document document) {
+//        Assert.notNull(document.getDocumentId);
+//        Assert.notNull(documentPrice);
+        DocHead docHead = document.getDocHead();
+        LOGGER.debug("updateDocument: docId = {}", docHead.getDocumentId());
+//        Assert.isTrue(isPresentDocumentInTable(documentId));
+//        Assert.isTrue(documentPrice >= 0);
+        docHeadDao.updateDocHead(docHead);
     }
 
     @Override

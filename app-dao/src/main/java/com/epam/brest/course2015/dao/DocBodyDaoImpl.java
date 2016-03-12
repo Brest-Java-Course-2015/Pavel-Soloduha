@@ -80,9 +80,10 @@ public class DocBodyDaoImpl implements DocBodyDao {
     public void addDocBody(List<DocBody> docBody) {
         LOGGER.debug("addDocBody(): docBodySize = {}", docBody.size());
         for(DocBody docBody1 : docBody) {
-            jdbcTemplate.update(docBodyInsertSql,new Object[]{docBody1.getDocumentId()
-                , docBody1.getDetailId()
-                , docBody1.getDetailCount()});
+//            jdbcTemplate.update(docBodyInsertSql,new Object[]{docBody1.getDocumentId()
+//                , docBody1.getDetailId()
+//                , docBody1.getDetailCount()});
+            namedParameterJdbcTemplate.update(docBodyInsertSql, getParametersMap(docBody1));
         }
     }
 

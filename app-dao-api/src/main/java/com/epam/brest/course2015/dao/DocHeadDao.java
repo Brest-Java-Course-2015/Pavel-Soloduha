@@ -14,7 +14,7 @@ public interface DocHeadDao {
 
     DocHead getDocHeadById(Integer documentId);
 
-    void updateDocHeadPrice(Integer documentId, Integer documentPrice);
+    void updateDocHead(DocHead docHead);
 
     void deleteDocHeadById(Integer documentId);
 

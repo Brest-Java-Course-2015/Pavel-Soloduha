@@ -15,37 +15,37 @@ import java.util.List;
  */
 
 @RestController
+@RequestMapping(value = "/detail")
 public class DetailRestController {
 
     @Autowired
     private DetailService detailService;
 
-    @RequestMapping(value = "/details", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.FOUND)
     public List<Detail> getAllDetails() {
         return detailService.getAllDetails();
     }
 
-    @RequestMapping(value = "/detail", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody Integer addDetail(@RequestBody Detail detail) {
         return detailService.addDetail(detail);
     }
 
-    @RequestMapping(value = "/detail/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody void deleteDetail(@PathVariable(value = "id") Integer detailId) {
         detailService.deleteDetail(detailId);
     }
 
-    @RequestMapping(value = "/detail/{id}/{name}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody void updateDetail(@PathVariable(value = "id") Integer detailId,
-                                         @PathVariable(value = "name") String detailName) {
-        detailService.updateDetail(new Detail(detailId, detailName));
+    public @ResponseBody void updateDetail(@RequestBody Detail detail) {
+        detailService.updateDetail(detail);
     }
 
-    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.FOUND)
     public Detail getDetailById(@PathVariable(value = "id") Integer detailId) {
         return detailService.getDetailById(detailId);

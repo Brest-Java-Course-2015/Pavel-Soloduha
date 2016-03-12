@@ -27,7 +27,7 @@ import java.sql.Date;
 public class DocumentServiceImplTest {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final DocHead DOC_HEAD = new DocHead(60, 2, Date.valueOf("2015-10-20"), 6000);
+    private static final DocHead DOC_HEAD = new DocHead(60, 2, Date.valueOf("2015-10-20"));
     private static final List<DocBody> DOC_BODY = new ArrayList<DocBody>();
     {
         DOC_BODY.add(new DocBody(60, 12, "", 50));
@@ -106,37 +106,37 @@ public class DocumentServiceImplTest {
         Document doc = documentService.getDocumentById(99);
     }
 
-    @Test
-    public void testUpdateDocumentPrice() throws Exception {
-        LOGGER.debug("test: updateDocumentPrice()");
-        documentService.updateDocumentPrice(40, 9600);
-        Document doc = documentService.getDocumentById(40);
-        Assert.assertTrue(doc.getDocHead().getDocumentPrice().equals(9600));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testUpdateDocumentNullPrice() throws Exception {
-        LOGGER.debug("test: updateDocumentNullPrice()");
-        documentService.updateDocumentPrice(40, null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testUpdateDocumentPriceNullId() throws Exception {
-        LOGGER.debug("test: updateDocumentPriceNullId()");
-        documentService.updateDocumentPrice(null, 9600);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testUpdateDocumentNegPrice() throws Exception {
-        LOGGER.debug("test: updateDocumentNegPrice()");
-        documentService.updateDocumentPrice(40, -15000);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testUpdateAbsDocumentPrice() throws Exception {
-        LOGGER.debug("test: updateAbsDocumentPrice()");
-        documentService.updateDocumentPrice(99, 6500);
-    }
+//    @Test
+//    public void testUpdateDocumentPrice() throws Exception {
+//        LOGGER.debug("test: updateDocumentPrice()");
+//        documentService.updateDocumentPrice(40, 9600);
+//        Document doc = documentService.getDocumentById(40);
+//        Assert.assertTrue(doc.getDocHead().getDocumentPrice().equals(9600));
+//    }
+//
+//    @Test(expected = IllegalArgumentException.class)
+//    public void testUpdateDocumentNullPrice() throws Exception {
+//        LOGGER.debug("test: updateDocumentNullPrice()");
+//        documentService.updateDocumentPrice(40, null);
+//    }
+//
+//    @Test(expected = IllegalArgumentException.class)
+//    public void testUpdateDocumentPriceNullId() throws Exception {
+//        LOGGER.debug("test: updateDocumentPriceNullId()");
+//        documentService.updateDocumentPrice(null, 9600);
+//    }
+//
+//    @Test(expected = IllegalArgumentException.class)
+//    public void testUpdateDocumentNegPrice() throws Exception {
+//        LOGGER.debug("test: updateDocumentNegPrice()");
+//        documentService.updateDocumentPrice(40, -15000);
+//    }
+//
+//    @Test(expected = IllegalArgumentException.class)
+//    public void testUpdateAbsDocumentPrice() throws Exception {
+//        LOGGER.debug("test: updateAbsDocumentPrice()");
+//        documentService.updateDocumentPrice(99, 6500);
+//    }
 
     @Test
     public void testDeleteDocument() throws Exception {

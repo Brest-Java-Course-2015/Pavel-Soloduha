@@ -30,9 +30,7 @@ public class DocHeadDaoImplTest {
     private static final Integer DOCUMENT_ID_2 = 43;
     private static final Integer DOCUMENT_TYPE = 2;
     private static final Date DOCUMENT_DATE = Date.valueOf("2015-10-20");
-    private static final Integer DOCUMENT_PRICE_1 = 8600;
-    private static final Integer DOCUMENT_PRICE_2 = 90000;
-    private static final DocHead DOC_HEAD = new DocHead(DOCUMENT_ID_1, DOCUMENT_TYPE, DOCUMENT_DATE, DOCUMENT_PRICE_1);
+    private static final DocHead DOC_HEAD = new DocHead(DOCUMENT_ID_1, DOCUMENT_TYPE, DOCUMENT_DATE);
 
     @Autowired
     private DocHeadDao docHeadDao;
@@ -61,11 +59,12 @@ public class DocHeadDaoImplTest {
     }
 
     @Test
-    public void testUpdateDocHeadPrice() {
-        LOGGER.debug("test: updateDocHeadPrice()");
-        docHeadDao.updateDocHeadPrice(DOCUMENT_ID_2, DOCUMENT_PRICE_2);
-        int newPrice = docHeadDao.getDocHeadById(DOCUMENT_ID_2).getDocumentPrice();
-        Assert.assertTrue(newPrice == DOCUMENT_PRICE_2);
+    public void testUpdateDocHead() {
+        LOGGER.debug("test: updateDocHead()");
+        int docId = docHeadDao.addDocHead(DOC_HEAD);
+        DocHead docHead = new DocHead(docId, DOCUMENT_TYPE, Date.valueOf("2015-10-22"));
+        docHeadDao.updateDocHead(docHead);
+        Assert.assertTrue(docHeadDao.getDocHeadById(docHead.getDocumentId()).getDocumentDate().compareTo(Date.valueOf("2015-10-22")) == 0);
     }
 
     @Test(expected = EmptyResultDataAccessException.class)

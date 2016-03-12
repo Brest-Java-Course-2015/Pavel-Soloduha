@@ -34,8 +34,8 @@ public class DocHeadDaoImpl implements DocHeadDao {
     @Value("${dochead.selectDocHeadById}")
     private String docHeadSelectByIdSql;
 
-    @Value("${dochead.updateDocHeadPrice}")
-    private String docHeadUpdatePriceSql;
+    @Value("${dochead.updateDocHead}")
+    private String docHeadUpdateSql;
 
     @Value("${dochead.deleteDocHeadById}")
     private String docHeadDeleteByIdSql;
@@ -56,7 +56,6 @@ public class DocHeadDaoImpl implements DocHeadDao {
         parameterSource.addValue(DOCUMENT_ID.getValue(), docHead.getDocumentId());
         parameterSource.addValue(DOCUMENT_TYPE.getValue(), docHead.getDocumentType());
         parameterSource.addValue(DOCUMENT_DATE.getValue(), docHead.getDocumentDate());
-        parameterSource.addValue(DOCUMENT_PRICE.getValue(), docHead.getDocumentPrice());
         return parameterSource;
     }
 
@@ -66,8 +65,7 @@ public class DocHeadDaoImpl implements DocHeadDao {
         public DocHead mapRow(ResultSet resultSet, int i) throws SQLException {
             DocHead docHead = new DocHead(resultSet.getInt(DOCUMENT_ID.getValue()),
                     resultSet.getInt(DOCUMENT_TYPE.getValue()),
-                    resultSet.getDate(DOCUMENT_DATE.getValue()),
-                    resultSet.getInt(DOCUMENT_PRICE.getValue()));
+                    resultSet.getDate(DOCUMENT_DATE.getValue()));
             return docHead;
         }
     }
@@ -80,8 +78,8 @@ public class DocHeadDaoImpl implements DocHeadDao {
 
     @Override
     public Integer addDocHead(DocHead docHead) {
-        LOGGER.debug("addDocHead(): docType = {}, docDate = {}, docPrice = {}",
-                docHead.getDocumentType(), docHead.getDocumentDate(), docHead.getDocumentPrice());
+        LOGGER.debug("addDocHead(): docType = {}, docDate = {}",
+                docHead.getDocumentType(), docHead.getDocumentDate());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedParameterJdbcTemplate.update(docHeadInsertSql, getParametersMap(docHead), keyHolder);
         return keyHolder.getKey().intValue();
@@ -94,9 +92,11 @@ public class DocHeadDaoImpl implements DocHeadDao {
     }
 
     @Override
-    public void updateDocHeadPrice(Integer documentId, Integer documentPrice) {
-        LOGGER.debug("updateDocHeadPrice(): docId = {}, docPrice = {}", documentId, documentPrice);
-        jdbcTemplate.update(docHeadUpdatePriceSql, new Object[]{documentPrice, documentId});
+    public void updateDocHead(DocHead docHead) {
+        LOGGER.debug("updateDocHead(): docId = {}, docType = {}, docDate = {}", docHead.getDocumentId()
+                , docHead.getDocumentType(), docHead.getDocumentDate());
+        jdbcTemplate.update(docHeadUpdateSql, new Object[]{docHead.getDocumentType(), docHead.getDocumentDate()
+                , docHead.getDocumentId()});
     }
 
     @Override
