@@ -77,8 +77,9 @@ public class DetailDaoImplTest {
 //    public void testGetDetailById() {
 //        LOGGER.debug("test: getDetailById()");
 //        Detail detail = detailDao.getDetailById(DETAIL_ID);
-//        Assert.assertNotNull(detail);
-//        Assert.assertTrue(detail.getDetailName().equals(DETAIL_NAME));
+////        Assert.assertNotNull(detail);
+////        Assert.assertTrue(detail.getDetailName().equals("Кирка"));
+//        Assert.assertEquals(detail.getDetailName(), DETAIL_NAME);
 //    }
 
     @Test

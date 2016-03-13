@@ -107,7 +107,7 @@ public class DocBodyDaoImpl implements DocBodyDao {
 
     @Override
     public List<DocBody> getAllOutputDetails() {
-        LOGGER.debug("getAllIncomeDetails():");
+        LOGGER.debug("getAllOutputDetails():");
         return jdbcTemplate.query(outputDetailsSelectSql, new DocBodyRowMapper());
     }
 }

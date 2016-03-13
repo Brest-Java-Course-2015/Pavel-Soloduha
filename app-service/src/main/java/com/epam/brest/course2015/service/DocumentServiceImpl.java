@@ -62,6 +62,7 @@ public class DocumentServiceImpl implements DocumentService {
             Assert.isTrue(isPresentDetailInTable(bodyList.get(i).getDetailId()));
         }
         docBodyDao.addDocBody(bodyList);
+        Assert.isTrue(isPossibleState(this.getCurrentState()));
         return docId;
     }
 
@@ -86,6 +87,8 @@ public class DocumentServiceImpl implements DocumentService {
 //        Assert.isTrue(isPresentDocumentInTable(documentId));
 //        Assert.isTrue(documentPrice >= 0);
         docHeadDao.updateDocHead(docHead);
+        Assert.isTrue(isPossibleState(this.getCurrentState()));
+
     }
 
     @Override
@@ -96,6 +99,7 @@ public class DocumentServiceImpl implements DocumentService {
         Assert.isTrue(isPresentDocumentInTable(documentId));
         docBodyDao.deleteDocBodyById(documentId);
         docHeadDao.deleteDocHeadById(documentId);
+        Assert.isTrue(isPossibleState(this.getCurrentState()));
     }
 
     @Override
@@ -128,7 +132,6 @@ public class DocumentServiceImpl implements DocumentService {
         return docBodyDao.getAllOutputDetails();
     }
 
-    //todo make test for me
     @Override
     public List<DocBody> getCurrentState() {
         LOGGER.debug("getCurrentState()");
@@ -136,57 +139,90 @@ public class DocumentServiceImpl implements DocumentService {
         List<DocBody> output = docBodyDao.getAllOutputDetails();
         List<DocBody> result = new ArrayList<DocBody>();
 
-        boolean check = false;
-        for(int i = 0; i < input.size(); i++) {
-            DocBody item = input.get(i);
+        result.addAll(input);
 
-            for(int j = 0; j < result.size(); j++) {
-                DocBody resItem = result.get(j);
-
-                check = false;
-                if(resItem.getDetailName().equals(item.getDetailName())) {
-                    resItem.setDetailCount(resItem.getDetailCount() + item.getDetailCount());
-                    result.set(j, resItem);
-                    check = true;
-                    break;
-                }
-            }
-
-            if(!check) {
-                DocBody newItem = new DocBody(item);
-                newItem.setDocumentId(1);
-                result.add(newItem);
-            }
-        }
         for(int i = 0; i < output.size(); i++) {
-            DocBody item = output.get(i);
-
-            check = false;
+            DocBody outDocBody = output.get(i);
             for(int j = 0; j < result.size(); j++) {
-                DocBody resItem = result.get(j);
-
-                if(resItem.getDetailName().equals(item.getDetailName())) {
-                    resItem.setDetailCount(resItem.getDetailCount() - item.getDetailCount());
-                    result.set(j, resItem);
-                    check = true;
-                    break;
+                DocBody resDocBody = result.get(j);
+                if(resDocBody.getDetailName().equals(outDocBody.getDetailName())) {
+                    resDocBody.setDetailCount(resDocBody.getDetailCount() - outDocBody.getDetailCount());
+                    result.set(j, resDocBody);
                 }
             }
-
-            if(!check) {
-                DocBody newItem = new DocBody(item);
-                newItem.setDocumentId(1);
-                newItem.setDetailCount(-item.getDetailCount());
-                result.add(newItem);
-            }
         }
+
+        Assert.isTrue(isPossibleState(result));
 
         for(int i = result.size() - 1; i >= 0; i--) {
-            DocBody item = result.get(i);
-            if(item.getDetailCount() == 0) {
+            DocBody resDocBody = result.get(i);
+            if(resDocBody.getDetailCount() == 0) {
                 result.remove(i);
             }
         }
+
+//        boolean check = false;
+//        for(int i = 0; i < input.size(); i++) {
+//            DocBody item = input.get(i);
+//
+//            for(int j = 0; j < result.size(); j++) {
+//                DocBody resItem = result.get(j);
+//
+//                check = false;
+//                if(resItem.getDetailName().equals(item.getDetailName())) {
+//                    resItem.setDetailCount(resItem.getDetailCount() + item.getDetailCount());
+//                    result.set(j, resItem);
+//                    check = true;
+//                    break;
+//                }
+//            }
+//
+//            if(!check) {
+//                DocBody newItem = new DocBody(item);
+//                newItem.setDocumentId(1);
+//                result.add(newItem);
+//            }
+//        }
+//        for(int i = 0; i < output.size(); i++) {
+//            DocBody item = output.get(i);
+//
+//            check = false;
+//            for(int j = 0; j < result.size(); j++) {
+//                DocBody resItem = result.get(j);
+//
+//                if(resItem.getDetailName().equals(item.getDetailName())) {
+//                    resItem.setDetailCount(resItem.getDetailCount() - item.getDetailCount());
+//                    result.set(j, resItem);
+//                    check = true;
+//                    break;
+//                }
+//            }
+//
+//            if(!check) {
+//                DocBody newItem = new DocBody(item);
+//                newItem.setDocumentId(1);
+//                newItem.setDetailCount(-item.getDetailCount());
+//                result.add(newItem);
+//            }
+//        }
+//
+//        for(int i = result.size() - 1; i >= 0; i--) {
+//            DocBody item = result.get(i);
+//            if(item.getDetailCount() == 0) {
+//                result.remove(i);
+//            }
+//        }
         return result;
+    }
+
+    @Override
+    public Boolean isPossibleState(List<DocBody> docBodies) {
+
+        for(DocBody docBody : docBodies) {
+            if(docBody.getDetailCount() < 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }

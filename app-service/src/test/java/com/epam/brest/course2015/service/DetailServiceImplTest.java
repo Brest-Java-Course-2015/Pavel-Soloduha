@@ -75,6 +75,12 @@ public class DetailServiceImplTest {
         detailService.deleteDetail(2);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteDetailWithRef() throws Exception {
+        LOGGER.debug("test: deleteDetailWithRef()");
+        detailService.deleteDetail(16);
+    }
+
     @Test
     public void testUpdateDetail() throws Exception {
         LOGGER.debug("test: updateDetail()");

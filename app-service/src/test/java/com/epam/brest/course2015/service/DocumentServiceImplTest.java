@@ -27,12 +27,12 @@ import java.sql.Date;
 public class DocumentServiceImplTest {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final DocHead DOC_HEAD = new DocHead(60, 2, Date.valueOf("2015-10-20"));
+    private static final DocHead DOC_HEAD = new DocHead(60, 1, Date.valueOf("2015-10-20"));
     private static final List<DocBody> DOC_BODY = new ArrayList<DocBody>();
     {
-        DOC_BODY.add(new DocBody(60, 12, "", 50));
-        DOC_BODY.add(new DocBody(60, 16, "", 40));
-        DOC_BODY.add(new DocBody(60, 25, "", 5));
+        DOC_BODY.add(new DocBody(60, 12, "Молоток", 50));
+        DOC_BODY.add(new DocBody(60, 16, "Гвоздь", 40));
+        DOC_BODY.add(new DocBody(60, 25, "Лопата", 5));
     }
     private static final Document DOCUMENT = new Document(DOC_HEAD, DOC_BODY);
 
@@ -142,7 +142,7 @@ public class DocumentServiceImplTest {
     public void testDeleteDocument() throws Exception {
         LOGGER.debug("test: deleteDocument()");
         int oldSize = documentService.getAllDocuments().size();
-        documentService.deleteDocument(40);
+        documentService.deleteDocument(50);
         int newSize = documentService.getAllDocuments().size();
         Assert.assertTrue(oldSize - 1 == newSize);
     }

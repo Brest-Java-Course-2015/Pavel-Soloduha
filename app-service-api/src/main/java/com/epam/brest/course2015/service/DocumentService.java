@@ -32,4 +32,6 @@ public interface DocumentService {
     List<DocBody> getAllOutputDetails();
 
     List<DocBody> getCurrentState();
+
+    Boolean isPossibleState(List<DocBody> docBodies);
 }
