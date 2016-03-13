@@ -140,22 +140,18 @@ public class DetailServiceImplTest {
         detailService.addDetail(new Detail());
     }
 
-// FIXME: 11.03.2016
-//    В идее всё норм а в мавене падает
-//    @Test(expected = IllegalArgumentException.class)
-//    public void testAddExistDetail() throws Exception {
-//        LOGGER.debug("test: addExistDetail()");
-//        detailService.addDetail(new Detail(DETAIL_NAME_2));
-//    }
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddExistDetail() throws Exception {
+        LOGGER.debug("test: addExistDetail()");
+        detailService.addDetail(new Detail(DETAIL_NAME_2));
+    }
 
-// FIXME: 11.03.2016
-//    В идее всё норм а в мавене падает
-//    @Test
-//    public void testGetDetailById() throws Exception {
-//        LOGGER.debug("test: getDetailById()");
-//        Detail detail = detailService.getDetailById(DETAIL_ID_2);
-//        Assert.assertTrue(detail.getDetailName().equals(DETAIL_NAME_2));
-//    }
+    @Test
+    public void testGetDetailById() throws Exception {
+        LOGGER.debug("test: getDetailById()");
+        Detail detail = detailService.getDetailById(DETAIL_ID_2);
+        Assert.assertTrue(detail.getDetailName().equals(DETAIL_NAME_2));
+    }
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetDetailByNullId() throws Exception {

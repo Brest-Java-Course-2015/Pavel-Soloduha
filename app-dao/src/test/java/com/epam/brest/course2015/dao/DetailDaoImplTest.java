@@ -71,16 +71,13 @@ public class DetailDaoImplTest {
         Assert.assertTrue(detail.getDetailName().equals(NEW_DETAIL_NAME));
     }
 
-// FIXME: 11.03.2016
-//    В идее всё норм а в мавене падает
-//    @Test
-//    public void testGetDetailById() {
-//        LOGGER.debug("test: getDetailById()");
-//        Detail detail = detailDao.getDetailById(DETAIL_ID);
-////        Assert.assertNotNull(detail);
-////        Assert.assertTrue(detail.getDetailName().equals("Кирка"));
-//        Assert.assertEquals(detail.getDetailName(), DETAIL_NAME);
-//    }
+    @Test
+    public void testGetDetailById() {
+        LOGGER.debug("test: getDetailById()");
+        Detail detail = detailDao.getDetailById(DETAIL_ID);
+        Assert.assertNotNull(detail);
+        Assert.assertEquals(detail.getDetailName(), DETAIL_NAME);
+    }
 
     @Test
     public void testHasReferencesTrue() {
@@ -106,13 +103,11 @@ public class DetailDaoImplTest {
         Assert.assertTrue(detailDao.isIdPresentInTable(1));
     }
 
-// FIXME: 11.03.2016
-//    В идее всё норм а в мавене падает
-//    @Test
-//    public void testIsNamePresentInTable() {
-//        LOGGER.debug("test: isNamePresentInTable()");
-//        Assert.assertTrue(detailDao.isNamePresentInTable("Лопата"));
-//    }
+    @Test
+    public void testIsNamePresentInTable() {
+        LOGGER.debug("test: isNamePresentInTable()");
+        Assert.assertTrue(detailDao.isNamePresentInTable("Лопата"));
+    }
 
     @Test(expected = AssertionError.class)
     public void testIsNamePresentInTableExc() {

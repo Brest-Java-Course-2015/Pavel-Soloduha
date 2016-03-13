@@ -1,6 +1,9 @@
 package com.epam.brest.course2015.app;
 
 import com.epam.brest.course2015.domain.Detail;
+import com.epam.brest.course2015.domain.DocBody;
+import com.epam.brest.course2015.domain.DocHead;
+import com.epam.brest.course2015.domain.Document;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -106,7 +111,7 @@ public class Main {
                 getDocById();
                 break;
             case 5:
-                addDocum();
+//                addDocum();
                 break;
             case 6:
                 deleteDocById();
@@ -176,8 +181,30 @@ public class Main {
     }
 
 //    TODO
-    private void addDocum() {
-    }
+//    private void addDocum() {
+//        List<DocBody> list = new ArrayList<DocBody>();
+//        DocHead docHead = new DocHead();
+//
+//        System.out.println("    Enter document type 1-input 2-output");
+//        docHead.setDocumentType(sc.nextInt());
+//        System.out.println("    Enter document date in format");
+////        docHead.setDocumentDate(sc.next());
+//        System.out.println("    Enter document price");
+//        docHead.setDocumentPrice(sc.nextInt());
+//        String tmpStr;
+//        do{
+//            tmpStr = sc.next();
+//        }while(!tmpStr.equals('~'));
+//
+//        Document doc = new Document(docHead, list);
+//
+//        try {
+//            restTemplate.postForObject(url + urlDoc, doc, Object.class);
+//            System.out.println("    Document is added");
+//        } catch (CustomException ex) {
+//            System.out.println("    ERROR: " + ex.getMessage());
+//        }
+//    }
 
     private void deleteDocById() {
         Integer docId = 0;
