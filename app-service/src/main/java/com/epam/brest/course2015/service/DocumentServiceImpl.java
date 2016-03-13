@@ -80,15 +80,17 @@ public class DocumentServiceImpl implements DocumentService {
     //fixme
     @Override
     public void updateDocument(Document document) {
-//        Assert.notNull(document.getDocumentId);
-//        Assert.notNull(documentPrice);
+        Assert.notNull(document);
+        Assert.notNull(document.getDocHead());
+        Assert.notNull(document.getDocBody());
+        Assert.notNull(document.getDocHead().getDocumentId());
         DocHead docHead = document.getDocHead();
         LOGGER.debug("updateDocument: docId = {}", docHead.getDocumentId());
-//        Assert.isTrue(isPresentDocumentInTable(documentId));
-//        Assert.isTrue(documentPrice >= 0);
+        Assert.isTrue(isPresentDocumentInTable(docHead.getDocumentId()));
         docHeadDao.updateDocHead(docHead);
+        docBodyDao.deleteDocBodyById(docHead.getDocumentId());
+        docBodyDao.addDocBody(document.getDocBody());
         Assert.isTrue(isPossibleState(this.getCurrentState()));
-
     }
 
     @Override

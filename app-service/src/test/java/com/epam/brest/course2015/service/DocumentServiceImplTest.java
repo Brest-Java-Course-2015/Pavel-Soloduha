@@ -107,36 +107,34 @@ public class DocumentServiceImplTest {
     }
 
 //    @Test
-//    public void testUpdateDocumentPrice() throws Exception {
-//        LOGGER.debug("test: updateDocumentPrice()");
-//        documentService.updateDocumentPrice(40, 9600);
-//        Document doc = documentService.getDocumentById(40);
-//        Assert.assertTrue(doc.getDocHead().getDocumentPrice().equals(9600));
+//    public void testUpdateDocument() throws Exception {
+//        LOGGER.debug("test: updateDocument()");
+//        int docId = documentService.addDocument(DOCUMENT);
+//        Document document = documentService.getDocumentById(docId);
+//        document.getDocBody().clear();
+//        documentService.updateDocument(document);
+//        System.out.println(documentService.getDocumentById(docId).getDocBody().size());
+//        Assert.assertTrue(documentService.getDocumentById(docId).getDocBody().size() == 0);
 //    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void testUpdateDocumentNullPrice() throws Exception {
-//        LOGGER.debug("test: updateDocumentNullPrice()");
-//        documentService.updateDocumentPrice(40, null);
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void testUpdateDocumentPriceNullId() throws Exception {
-//        LOGGER.debug("test: updateDocumentPriceNullId()");
-//        documentService.updateDocumentPrice(null, 9600);
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void testUpdateDocumentNegPrice() throws Exception {
-//        LOGGER.debug("test: updateDocumentNegPrice()");
-//        documentService.updateDocumentPrice(40, -15000);
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void testUpdateAbsDocumentPrice() throws Exception {
-//        LOGGER.debug("test: updateAbsDocumentPrice()");
-//        documentService.updateDocumentPrice(99, 6500);
-//    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateNullDocument() throws Exception {
+        LOGGER.debug("test: updateNullDocument()");
+        documentService.updateDocument(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateDocumentNullDocHead() throws Exception {
+        LOGGER.debug("test: updateDocumentNullDocHead()");
+        documentService.updateDocument(new Document(null, DOC_BODY));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateDocumentNullDocBody() throws Exception {
+        LOGGER.debug("test: updateDocumentNullDocBody()");
+        documentService.updateDocument(new Document(DOC_HEAD, null));
+
+    }
 
     @Test
     public void testDeleteDocument() throws Exception {
