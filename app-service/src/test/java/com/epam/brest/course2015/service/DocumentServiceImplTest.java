@@ -165,7 +165,7 @@ public class DocumentServiceImplTest {
 
     @Test
     public void testGetAllIncomeDetails() throws Exception {
-        LOGGER.debug("test: deleteDocumentWithAbsId()");
+        LOGGER.debug("test: getAllIncomeDetails()");
         List<DocBody> list = documentService.getAllIncomeDetails();
         Assert.assertTrue(list.size() > 0);
     }
@@ -179,8 +179,38 @@ public class DocumentServiceImplTest {
 
     @Test
     public void testGetAllDocHeads() throws Exception {
-        LOGGER.debug("test: deleteDocumentWithAbsId()");
+        LOGGER.debug("test: getAllDocHeads()");
         List<DocHead> list = documentService.getAllDocHeads();
         Assert.assertTrue(list.size() > 0);
+    }
+
+    @Test
+    public void testIsPresentDocInTableTrue() throws Exception {
+        LOGGER.debug("test: isPresentDocInTableTrue()");
+        Assert.assertTrue(documentService.isPresentDocumentInTable(40));
+    }
+
+    @Test
+    public void testIsPresentDocInTableFalse() throws Exception {
+        LOGGER.debug("test: isPresentDocInTableFalse()");
+        Assert.assertTrue(!documentService.isPresentDocumentInTable(2));
+    }
+
+    @Test
+    public void testIsPresentDetailInTableTrue() throws Exception {
+        LOGGER.debug("test: isPresentDetailInTableTrue()");
+        Assert.assertTrue(documentService.isPresentDetailInTable(12));
+    }
+
+    @Test
+    public void testIsPresentDetailInTableFalse() throws Exception {
+        LOGGER.debug("test: isPresentDetailInTableFalse()");
+        Assert.assertTrue(!documentService.isPresentDetailInTable(1));
+    }
+
+    @Test
+    public void testIsPossibleState() throws Exception {
+        LOGGER.debug("test: isPossibleState()");
+        Assert.assertTrue(documentService.isPossibleState(documentService.getCurrentState()));
     }
 }

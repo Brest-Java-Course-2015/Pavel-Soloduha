@@ -163,57 +163,6 @@ public class DocumentServiceImpl implements DocumentService {
             }
         }
 
-//        boolean check = false;
-//        for(int i = 0; i < input.size(); i++) {
-//            DocBody item = input.get(i);
-//
-//            for(int j = 0; j < result.size(); j++) {
-//                DocBody resItem = result.get(j);
-//
-//                check = false;
-//                if(resItem.getDetailName().equals(item.getDetailName())) {
-//                    resItem.setDetailCount(resItem.getDetailCount() + item.getDetailCount());
-//                    result.set(j, resItem);
-//                    check = true;
-//                    break;
-//                }
-//            }
-//
-//            if(!check) {
-//                DocBody newItem = new DocBody(item);
-//                newItem.setDocumentId(1);
-//                result.add(newItem);
-//            }
-//        }
-//        for(int i = 0; i < output.size(); i++) {
-//            DocBody item = output.get(i);
-//
-//            check = false;
-//            for(int j = 0; j < result.size(); j++) {
-//                DocBody resItem = result.get(j);
-//
-//                if(resItem.getDetailName().equals(item.getDetailName())) {
-//                    resItem.setDetailCount(resItem.getDetailCount() - item.getDetailCount());
-//                    result.set(j, resItem);
-//                    check = true;
-//                    break;
-//                }
-//            }
-//
-//            if(!check) {
-//                DocBody newItem = new DocBody(item);
-//                newItem.setDocumentId(1);
-//                newItem.setDetailCount(-item.getDetailCount());
-//                result.add(newItem);
-//            }
-//        }
-//
-//        for(int i = result.size() - 1; i >= 0; i--) {
-//            DocBody item = result.get(i);
-//            if(item.getDetailCount() == 0) {
-//                result.remove(i);
-//            }
-//        }
         return result;
     }
 
